@@ -10,7 +10,7 @@ class BaseEntity : public ILoggable {
     protected:
     int entityID;
     string name;
-    string dataCreated;
+    string dateCreated;
     string lastModified;
     static int entityCounter;
 
@@ -26,7 +26,8 @@ class BaseEntity : public ILoggable {
    //getters
    int getID() const { return entityID; }
    string getNmae() const { return name;}
-   string getDateCreated() const { return lastModified;}
+   string getDateCreated() const { return dateCreated;}
+   string getLastModified() const { return lastModified;}
    static int getTotalEntities() { return entityCounter; }
 
    //setters

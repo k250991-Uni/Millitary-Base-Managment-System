@@ -29,7 +29,7 @@ class Officer : public Person {
     static int getOfficerCount() { return officerCount; }
 
     //setters
-    void setSpecialiazation(const string& spec);
+    void setSpecialization(const string& spec);
     void setCommandCenter(const string& cmdCenter);
     void setYearsOfService(int years);
 

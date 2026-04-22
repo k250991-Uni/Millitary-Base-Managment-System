@@ -1,5 +1,5 @@
 #ifndef CONTRACTOR_H
-#define CONTRACTOOR_H
+#define CONTRACTOR_H
 
 #include "Person.h"
 #include<string>
@@ -12,9 +12,8 @@ class Contractor : public Person {
     string companyName;
     string securityClearanceLevel;
     string contractEndDate;
-    bool isClearancevalid;
-    double contractvalue;
-    static int contarctValue;
+    bool isClearanceValid;
+    double contractValue;
     static int contractorCount;
 
     public:
@@ -25,23 +24,23 @@ class Contractor : public Person {
     void display() const override;
     void saveToFile(const string& filename) const override;
     void loadFromFile(const string& filename) override ;
-    string getEntityType() const override { return "Contarctor";}
-    string getPersonType() const override { return "Contarctor";}
+    string getEntityType() const override { return "Contractor";}
+    string getPersonType() const override { return "Contractor";}
 
     //getter
     string getCompanyName() const { return companyName; }
-    string getSecurityClearanceLevel() const {{ return securityClearanceLevel;}}
-    string getContatractEndDate() const { return contractEndDate;}
-    bool getIsClearanceValid() const { return isClearancevalid;}
-    double getContarctValue() const { return contractvalue;}
-    static int getConatractorCount() { return contractorCount; }
+    string getSecurityClearanceLevel() const { return securityClearanceLevel;}
+    string getContractEndDate() const { return contractEndDate;}
+    bool getIsClearanceValid() const { return isClearanceValid;}
+    double getContractValue() const { return contractValue;}
+    static int getContractorCount() { return contractorCount; }
     
 
     //setters
     void setCompanyName(const string& company);
     void setSecurityClearanceLevel(const string & clearance);
-    void setConstractEndDate(const string& date);
-    void setContractvalue(double value);
+    void setContractEndDate(const string& date);
+    void setContractValue(double value);
 
     // Clearance validation
     bool validateClearance();

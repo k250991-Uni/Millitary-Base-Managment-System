@@ -30,10 +30,10 @@ class Person : public BaseEntity {
     vector<string> getAssigneedWeapons()const { return assignedWeapons; }
 
     //setters
-    void setrank(const string & newRank);
+    void setRank(const string & newRank);
     void setSalary(double newSalary);
     void setCurrentPosition(const string& newPosition);
-    void addAssignedWeapom(const string& weaponID);
+    void addAssignedWeapon(const string& weaponID);
     void removeAssignedWeapon(const string&weaponID);
 
     //service number validaiton

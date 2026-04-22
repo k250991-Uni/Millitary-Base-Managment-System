@@ -7,7 +7,7 @@ using namespace std;
 // Interface for logging functionality
 class ILoggable{
     public:
-    virtual ~ ILoggable(){} 
+    virtual ~ILoggable(){} 
     
     //pure virtual function
     virtual void logActivity(string msg) = 0;

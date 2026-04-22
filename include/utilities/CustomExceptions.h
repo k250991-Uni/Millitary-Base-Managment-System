@@ -19,9 +19,9 @@ class PersonnelException : public MillitaryException{
     public:
     PersonnelException(const string& msg = "Personnel error occured"):MillitaryException("PERSONNEL ERROR:" + msg){}
 };
-class InvallidRankException : public PersonnelException{
+class InvalidRankException : public PersonnelException{
     public:
-    InvallidRankException(const string& rank):PersonnelException("Invalid rank "+ rank){
+    InvalidRankException(const string& rank):PersonnelException("Invalid rank "+ rank){
 
     }
 };
@@ -70,8 +70,8 @@ class FileNotFoundException : public FileExceptioon{
 };
 // for validation
 
-class validationException : public MillitaryException {
+class ValidationException : public MillitaryException {
     public :
-    validationException(const string& msg = "Validaiton failed") : MillitaryException("VALIDATION ERROR: "+ msg){}
+    ValidationException(const string& msg = "Validation failed") : MillitaryException("VALIDATION ERROR: "+ msg){}
 };
 #endif

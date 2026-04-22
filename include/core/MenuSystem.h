@@ -20,7 +20,7 @@ class MenuSystem{
     void displayPersonnelMenu();
     void displayOperationMenu();
     void displayLogisticsMenu();
-    void siplayReportMenu();
+    void displayReportMenu();
 
     //personnel mangemnet 
     void addOfficer();
@@ -76,7 +76,6 @@ class MenuSystem{
     void run();
 
     //handlers
-
     void handleMainMenu(int choice);
     void handlePersonnelMenu(int choice);
     void handleLogisticsMenu(int choice);
