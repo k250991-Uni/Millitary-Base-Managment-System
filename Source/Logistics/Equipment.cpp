@@ -116,13 +116,3 @@ std::string Equipment::getLocation() const {
     return location;
 }
 
-// Stream output operator
-ostream& operator<<(ostream& out, const Equipment& equipment) {
-    out << "Code: " << equipment.equipmentCode
-        << " | Qty: " << equipment.quantity
-        << " | Unit Cost: Rs" << fixed << setprecision(2) << equipment.unitCost
-        << " | Total Value: Rs" << fixed << setprecision(2) << equipment.getTotalValue()
-        << " | Condition: " << equipment.condition
-        << " | Location: " << equipment.location;
-    return out;
-}

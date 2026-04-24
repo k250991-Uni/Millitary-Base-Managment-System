@@ -54,7 +54,7 @@ void Weapon::display() const {
     cout << "Condition: " << condition << endl;
     cout << "Location: " << location << endl;
     cout << "Ammunition: " << ammunition << "/" << magazineCapacity << " (" 
-         << getAmmunitionPercentage() << "%)" << endl;
+         << (magazineCapacity > 0 ? (ammunition * 100) / magazineCapacity : 0) << "%)" << endl;
     cout << "Security Lock: " << (isLocked ? "LOCKED" : "UNLOCKED") << endl;
     cout << "Last Service: " << lastServiceDate << endl;
     cout << "Created: " << getDateCreated() << endl;
@@ -129,12 +129,6 @@ bool Weapon::hasAdequateAmmunition(int required) const {
     return ammunition >= required;
 }
 
-// Get ammunition percentage
-int Weapon::getAmmunitionPercentage() const {
-    if (magazineCapacity == 0) return 0;
-    return (ammunition * 100) / magazineCapacity;
-}
-
 // Lock weapon
 void Weapon::lockWeapon() {
     isLocked = true;
@@ -173,7 +167,9 @@ string Weapon::getEquipmentType() const {
 
 // Operator< for comparison by ammunition percentage
 bool Weapon::operator<(const Weapon& other) const {
-    return getAmmunitionPercentage() < other.getAmmunitionPercentage();
+    int thisPercentage = magazineCapacity > 0 ? (ammunition * 100) / magazineCapacity : 0;
+    int otherPercentage = other.magazineCapacity > 0 ? (other.ammunition * 100) / other.magazineCapacity : 0;
+    return thisPercentage < otherPercentage;
 }
 
 // Operator== for comparison
@@ -181,12 +177,3 @@ bool Weapon::operator==(const Weapon& other) const {
     return BaseEntity::operator==(other);
 }
 
-// Stream output operator
-ostream& operator<<(ostream& out, const Weapon& weapon) {
-    out << "Weapon - ID: " << weapon.getID()
-        << " | Type: " << weapon.getWeaponType()
-        << " | Caliber: " << weapon.getCaliber()
-        << " | Ammo: " << weapon.getCurrentAmmunition() << "/" << weapon.getMaxAmmunitionCapacity()
-        << " | Status: " << (weapon.isWeaponLocked() ? "LOCKED" : "UNLOCKED");
-    return out;
-}

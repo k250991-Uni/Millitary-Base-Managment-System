@@ -34,7 +34,6 @@ class Person : public BaseEntity {
     void setSalary(double newSalary);
     void setCurrentPosition(const string& newPosition);
     void addAssignedWeapon(const string& weaponID);
-    void removeAssignedWeapon(const string&weaponID);
 
     //service number validaiton
     static bool isValidServiceNumber(const string& sNumber);
@@ -42,9 +41,5 @@ class Person : public BaseEntity {
     //operators
     bool operator < (const Person& other ) const ;
     bool operator==(const Person& other) const;
-
-    //stream operator
-    friend ostream& operator<< (ostream& out, const Person& person);
-    friend istream& operator>>(istream& in ,Person& person);
 };
 #endif

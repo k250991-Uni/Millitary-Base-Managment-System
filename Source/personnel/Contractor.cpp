@@ -98,24 +98,6 @@ void Contractor::setContractValue(double value) {
     logActivity("Contract value updated to: Rs" + to_string(value));
 }
 
-// Validate clearance
-bool Contractor::validateClearance() {
-    // Check if clearance is still valid (not expired)
-    // In this simple implementation, we just return the current status
-    return isClearanceValid;
-}
-
-// Update clearance status
-void Contractor::updateClearanceStatus(bool valid) {
-    isClearanceValid = valid;
-    updateLastModified();
-    if (valid) {
-        logActivity("Clearance renewed");
-    } else {
-        logActivity("Clearance revoked");
-    }
-}
-
 // Check if clearance level is valid
 bool Contractor::isClearanceLevelValid(const string& level) const {
     return Utils::isValidSecurityClearance(level);
@@ -148,11 +130,3 @@ bool Contractor::operator==(const Contractor& other) const {
     return BaseEntity::operator==(other);
 }
 
-// Stream output operator
-ostream& operator<<(ostream& out, const Contractor& contractor) {
-    out << "Contractor - " << static_cast<const Person&>(contractor)
-        << " | Company: " << contractor.companyName
-        << " | Clearance: " << contractor.securityClearanceLevel
-        << " | Value: Rs" << fixed << setprecision(2) << contractor.contractValue;
-    return out;
-}

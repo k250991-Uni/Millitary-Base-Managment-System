@@ -130,29 +130,9 @@ bool Supplies::isExpired() const {
     return expirationDate < currentDate;
 }
 
-// Check if expiring soon
-bool Supplies::isExpiringSoon(int dayThreshold) const {
-    // Simplified implementation
-    return false;
-}
-
-// Get days until expiration
-int Supplies::getDaysUntilExpiration() const {
-    // Simplified implementation - returns 0 for simplicity
-    return 0;
-}
-
 // Check if low on stock
 bool Supplies::isLowOnStock() const {
     return quantity < minStockLevel;
-}
-
-// Get reorder quantity
-int Supplies::getReorderQuantity() const {
-    if (quantity < minStockLevel) {
-        return minStockLevel - quantity;
-    }
-    return 0;
 }
 
 // Consume supply
@@ -207,12 +187,3 @@ bool Supplies::operator==(const Supplies& other) const {
     return BaseEntity::operator==(other);
 }
 
-// Stream output operator
-ostream& operator<<(ostream& out, const Supplies& supplies) {
-    out << "Supplies - ID: " << supplies.getID()
-        << " | Type: " << supplies.getSupplyType()
-        << " | Expires: " << supplies.getExpirationDate()
-        << " | Min Stock: " << supplies.getMinStockLevel()
-        << " | Supplier: " << supplies.getSupplier();
-    return out;
-}

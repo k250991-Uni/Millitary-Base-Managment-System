@@ -66,15 +66,6 @@ void Person::addAssignedWeapon(const string& weaponID) {
     }
 }
 
-// Remove assigned weapon
-void Person::removeAssignedWeapon(const string& weaponID) {
-    auto it = find(assignedWeapons.begin(), assignedWeapons.end(), weaponID);
-    if (it != assignedWeapons.end()) {
-        assignedWeapons.erase(it);
-        logActivity("Weapon " + weaponID + " removed");
-    }
-}
-
 // Validate service number
 bool Person::isValidServiceNumber(const string& sNumber) {
     return Utils::isValidServiceNumber(sNumber);
@@ -88,36 +79,4 @@ bool Person::operator<(const Person& other) const {
 // Operator== for comparison
 bool Person::operator==(const Person& other) const {
     return BaseEntity::operator==(other);
-}
-
-// Stream output operator
-ostream& operator<<(ostream& out, const Person& person) {
-    out << "Name: " << person.name 
-        << " | Service #: " << person.serviceNumber 
-        << " | Rank: " << person.rank
-        << " | Position: " << person.currentPosition
-        << " | Salary: Rs" << fixed << person.salary;
-    return out;
-}
-
-// Stream input operator
-istream& operator>>(istream& in, Person& person) {
-    cout << "Enter service number: ";
-    getline(in, person.serviceNumber);
-    
-    cout << "Enter rank: ";
-    getline(in, person.rank);
-    
-    cout << "Enter salary: ";
-    string salaryStr;
-    getline(in, salaryStr);
-    try {
-        person.salary = stod(salaryStr);
-    }
-    catch (...) {
-        throw ValidationException("Invalid salary format");
-    }
-    
-    person.updateLastModified();
-    return in;
 }

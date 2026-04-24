@@ -97,11 +97,3 @@ bool Officer::operator==(const Officer& other) const {
     return BaseEntity::operator==(other);
 }
 
-// Stream output operator
-ostream& operator<<(ostream& out, const Officer& officer) {
-    out << "Officer - " << static_cast<const Person&>(officer)
-        << " | Specialization: " << officer.specialization
-        << " | Command: " << officer.commandCenter
-        << " | Years: " << officer.yearOfService;
-    return out;
-}

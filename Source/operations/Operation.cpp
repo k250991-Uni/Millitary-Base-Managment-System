@@ -173,41 +173,6 @@ int Operation::getRequiredEquipmentCount() const {
     return requiredEquipmentIDs.size();
 }
 
-// Activate operation
-void Operation::activateOperation() {
-    if (status == "Active") {
-        throw OperationException("Operation already active");
-    }
-    status = "Active";
-    startDate = Utils::getCurrentDate();
-    updateLastModified();
-    logActivity("Operation activated");
-}
-
-// Complete operation
-void Operation::completeOperation() {
-    if (status == "Completed") {
-        throw OperationException("Operation already completed");
-    }
-    status = "Completed";
-    endDate = Utils::getCurrentDate();
-    updateLastModified();
-    logActivity("Operation completed");
-}
-
-// Abort operation
-void Operation::abortOperation() {
-    status = "Aborted";
-    endDate = Utils::getCurrentDate();
-    updateLastModified();
-    logActivity("Operation aborted");
-}
-
-// Check if active
-bool Operation::isActive() const {
-    return status == "Active";
-}
-
 // Operator< for comparison by start date
 bool Operation::operator<(const Operation& other) const {
     return startDate < other.startDate;

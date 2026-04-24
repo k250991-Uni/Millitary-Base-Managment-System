@@ -39,8 +39,5 @@ class Officer : public Person {
     //operators
     bool operator<(const Officer& ohter) const;
     bool operator==(const Officer& other) const;
-
-    // stream operators 
-    friend ostream& operator<< (ostream & out, const Officer& officer);
 };
 #endif

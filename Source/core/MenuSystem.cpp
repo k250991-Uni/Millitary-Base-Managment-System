@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -60,8 +61,7 @@ void MenuSystem::displayMainMenu() {
     cout << "2. Logistics Management" << endl;
     cout << "3. Operations Management" << endl;
     cout << "4. Reports & Analytics" << endl;
-    cout << "5. Audit Log" << endl;
-    cout << "6. Save & Exit" << endl;
+    cout << "5. Save & Exit" << endl;
     cout << "\nEnter your choice: ";
 }
 
@@ -109,14 +109,6 @@ void MenuSystem::handleMainMenu(int choice) {
             }
             break;
         case 5:
-            while (true) {
-                displayAuditMenu();
-                int aChoice = getAuditMenuChoice();
-                if (aChoice == 0) break;
-                handleAuditMenu(aChoice);
-            }
-            break;
-        case 6:
             saveAllData();
             isRunning = false;
             break;
@@ -131,12 +123,9 @@ void MenuSystem::displayPersonnelMenu() {
     Utils::printHeader("PERSONNEL MANAGEMENT");
     cout << "\n1. Add Officer" << endl;
     cout << "2. Add Contractor" << endl;
-    cout << "3. Update Personnel" << endl;
-    cout << "4. Delete Personnel" << endl;
-    cout << "5. Search Personnel" << endl;
-    cout << "6. Display All Personnel" << endl;
-    cout << "7. Assign Weapon to Personnel" << endl;
-    cout << "8. Promote Officer" << endl;
+    cout << "3. Delete Personnel" << endl;
+    cout << "4. Display All Personnel" << endl;
+    cout << "5. Promote Officer" << endl;
     cout << "0. Back to Main Menu" << endl;
     cout << "\nEnter your choice: ";
 }
@@ -157,21 +146,12 @@ void MenuSystem::handlePersonnelMenu(int choice) {
             addContractor();
             break;
         case 3:
-            updatePersonnel();
-            break;
-        case 4:
             deletePersonnel();
             break;
-        case 5:
-            searchPersonnel();
-            break;
-        case 6:
+        case 4:
             displayAllPersonnel();
             break;
-        case 7:
-            assignWeapon();
-            break;
-        case 8:
+        case 5:
             promoteOfficer();
             break;
         default:
@@ -186,13 +166,8 @@ void MenuSystem::displayLogisticsMenu() {
     Utils::printHeader("LOGISTICS MANAGEMENT");
     cout << "\n1. Add Weapon" << endl;
     cout << "2. Add Supplies" << endl;
-    cout << "3. Update Equipment" << endl;
-    cout << "4. Delete Equipment" << endl;
-    cout << "5. Search Equipment" << endl;
-    cout << "6. Display All Equipment" << endl;
-    cout << "7. Check Inventory" << endl;
-    cout << "8. Issue Ammunition" << endl;
-    cout << "9. Check Expired Supplies" << endl;
+    cout << "3. Delete Equipment" << endl;
+    cout << "4. Display All Equipment" << endl;
     cout << "0. Back to Main Menu" << endl;
     cout << "\nEnter your choice: ";
 }
@@ -213,19 +188,10 @@ void MenuSystem::handleLogisticsMenu(int choice) {
             addSupplies();
             break;
         case 3:
-            updateEquipment();
-            break;
-        case 4:
             deleteEquipment();
             break;
-        case 5:
-            searchEquipment();
-            break;
-        case 6:
+        case 4:
             displayAllEquipment();
-            break;
-        case 7:
-            checkInventory();
             break;
         default:
             cout << "Invalid choice." << endl;
@@ -238,13 +204,8 @@ void MenuSystem::displayOperationsMenu() {
     Utils::clearScreen();
     Utils::printHeader("OPERATIONS MANAGEMENT");
     cout << "\n1. Create Operation" << endl;
-    cout << "2. Update Operation Status" << endl;
-    cout << "3. Delete Operation" << endl;
-    cout << "4. Search Operation" << endl;
-    cout << "5. Display All Operations" << endl;
-    cout << "6. Assign Personnel to Operation" << endl;
-    cout << "7. Assign Equipment to Operation" << endl;
-    cout << "8. Generate Operation Report" << endl;
+    cout << "2. Delete Operation" << endl;
+    cout << "3. Display All Operations" << endl;
     cout << "0. Back to Main Menu" << endl;
     cout << "\nEnter your choice: ";
 }
@@ -262,25 +223,10 @@ void MenuSystem::handleOperationsMenu(int choice) {
             createOperation();
             break;
         case 2:
-            updateOperationStatus();
-            break;
-        case 3:
             deleteOperation();
             break;
-        case 4:
-            searchOperation();
-            break;
-        case 5:
+        case 3:
             displayAllOperations();
-            break;
-        case 6:
-            assignPersonnelToOperation();
-            break;
-        case 7:
-            assignEquipmentToOperation();
-            break;
-        case 8:
-            generateOperationReport();
             break;
         default:
             cout << "Invalid choice." << endl;
@@ -294,7 +240,6 @@ void MenuSystem::displayReportsMenu() {
     Utils::printHeader("REPORTS & ANALYTICS");
     cout << "\n1. Personnel Report" << endl;
     cout << "2. Equipment Report" << endl;
-    cout << "3. Inventory Report" << endl;
     cout << "0. Back to Main Menu" << endl;
     cout << "\nEnter your choice: ";
 }
@@ -313,40 +258,6 @@ void MenuSystem::handleReportsMenu(int choice) {
             break;
         case 2:
             generateEquipmentReport();
-            break;
-        case 3:
-            generateInventoryReport();
-            break;
-        default:
-            cout << "Invalid choice." << endl;
-    }
-    Utils::pauseExecution("Press Enter to continue...");
-}
-
-// Audit Menu
-void MenuSystem::displayAuditMenu() {
-    Utils::clearScreen();
-    Utils::printHeader("AUDIT LOG");
-    cout << "\n1. Display All Audit Entries" << endl;
-    cout << "2. Search Audit Log" << endl;
-    cout << "0. Back to Main Menu" << endl;
-    cout << "\nEnter your choice: ";
-}
-
-int MenuSystem::getAuditMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
-}
-
-void MenuSystem::handleAuditMenu(int choice) {
-    switch (choice) {
-        case 1:
-            displayAuditLog();
-            break;
-        case 2:
-            searchAuditLog();
             break;
         default:
             cout << "Invalid choice." << endl;
@@ -464,18 +375,6 @@ void MenuSystem::displayAllPersonnel() {
     }
 }
 
-void MenuSystem::updatePersonnel() {
-    cout << "\n=== UPDATE PERSONNEL ===" << endl;
-    cout << "Enter personnel ID to update: ";
-    int id;
-    cin >> id;
-    cin.ignore();
-    
-    // Search in all lists
-    // Simple implementation - can be expanded
-    cout << "Update functionality - detailed implementation in full version" << endl;
-}
-
 void MenuSystem::deletePersonnel() {
     cout << "\n=== DELETE PERSONNEL ===" << endl;
     cout << "Enter personnel ID to delete: ";
@@ -483,18 +382,27 @@ void MenuSystem::deletePersonnel() {
     cin >> id;
     cin.ignore();
     
-    // Delete from lists
-    cout << "Delete functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::searchPersonnel() {
-    cout << "\n=== SEARCH PERSONNEL ===" << endl;
-    cout << "Search functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::assignWeapon() {
-    cout << "\n=== ASSIGN WEAPON TO PERSONNEL ===" << endl;
-    cout << "Weapon assignment - detailed implementation in full version" << endl;
+    for (auto it = officers.begin(); it != officers.end(); ++it) {
+        if ((*it)->getID() == id) {
+            cout << "Deleting Officer: " << (*it)->getName() << endl;
+            delete *it;
+            officers.erase(it);
+            cout << "Officer deleted." << endl;
+            return;
+        }
+    }
+    
+    for (auto it = contractors.begin(); it != contractors.end(); ++it) {
+        if ((*it)->getID() == id) {
+            cout << "Deleting Contractor: " << (*it)->getName() << endl;
+            delete *it;
+            contractors.erase(it);
+            cout << "Contractor deleted." << endl;
+            return;
+        }
+    }
+    
+    cout << "Personnel not found." << endl;
 }
 
 void MenuSystem::promoteOfficer() {
@@ -653,38 +561,49 @@ void MenuSystem::displayAllEquipment() {
     }
 }
 
-void MenuSystem::updateEquipment() {
-    cout << "\n=== UPDATE EQUIPMENT ===" << endl;
-    cout << "Update functionality - detailed implementation in full version" << endl;
-}
-
 void MenuSystem::deleteEquipment() {
     cout << "\n=== DELETE EQUIPMENT ===" << endl;
-    cout << "Delete functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::searchEquipment() {
-    cout << "\n=== SEARCH EQUIPMENT ===" << endl;
-    cout << "Search functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::checkInventory() {
-    cout << "\n=== INVENTORY CHECK ===" << endl;
-    cout << "Inventory check - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::issuedAmmo() {
-    cout << "\n=== ISSUE AMMUNITION ===" << endl;
-    cout << "Ammunition issue - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::checkExpiredSupplies() {
-    cout << "\n=== EXPIRED SUPPLIES ===" << endl;
-    cout << "Checking for expired supplies..." << endl;
+    cout << "Enter equipment ID: ";
+    int id;
+    cin >> id;
+    cin.ignore();
     
-    for (const auto& supply : supplies) {
-        if (supply->isExpired()) {
-            cout << "EXPIRED: " << supply->getName() << " (ID: " << supply->getID() << ")" << endl;
+    // Search and delete from weapons
+    for (auto it = weapons.begin(); it != weapons.end(); ++it) {
+        if ((*it)->getID() == id) {
+            cout << "Deleting Weapon: " << (*it)->getName() << endl;
+            auditLog->addEntry("DELETE", "Weapon", id, "Weapon deleted");
+            delete *it;
+            weapons.erase(it);
+            cout << "Weapon deleted successfully." << endl;
+            return;
+        }
+    }
+    
+    // Search and delete from supplies
+    for (auto it = supplies.begin(); it != supplies.end(); ++it) {
+        if ((*it)->getID() == id) {
+            cout << "Deleting Supplies: " << (*it)->getName() << endl;
+            auditLog->addEntry("DELETE", "Supplies", id, "Supplies deleted");
+            delete *it;
+            supplies.erase(it);
+            cout << "Supplies deleted successfully." << endl;
+            return;
+        }
+    }
+    
+    cout << "\nEquipment not found." << endl;
+}
+
+void MenuSystem::displayAllOperations() {
+    cout << "\n=== ALL OPERATIONS ===" << endl;
+    
+    if (operations.empty()) {
+        cout << "No operations found." << endl;
+    } else {
+        for (const auto& op : operations) {
+            op->display();
+            cout << endl;
         }
     }
 }
@@ -723,79 +642,25 @@ void MenuSystem::createOperation() {
     }
 }
 
-void MenuSystem::updateOperationStatus() {
-    cout << "\n=== UPDATE OPERATION STATUS ===" << endl;
+void MenuSystem::deleteOperation() {
+    cout << "\n=== DELETE OPERATION ===" << endl;
     cout << "Enter operation ID: ";
     int id;
     cin >> id;
     cin.ignore();
     
-    cout << "Enter new status (Planned, Active, Completed, Aborted, On Hold): ";
-    string newStatus;
-    getline(cin, newStatus);
-    
-    for (auto& op : operations) {
-        if (op->getID() == id) {
-            try {
-                op->setStatus(newStatus);
-                auditLog->addEntry("UPDATE", "Operation", id, "Status updated to " + newStatus);
-                cout << "\nOperation status updated successfully." << endl;
-                return;
-            }
-            catch (const exception& e) {
-                cout << "\nError: " << e.what() << endl;
-                return;
-            }
+    for (auto it = operations.begin(); it != operations.end(); ++it) {
+        if ((*it)->getID() == id) {
+            cout << "Deleting Operation: " << (*it)->getOperationCode() << endl;
+            auditLog->addEntry("DELETE", "Operation", id, "Operation deleted");
+            delete *it;
+            operations.erase(it);
+            cout << "Operation deleted successfully." << endl;
+            return;
         }
     }
+    
     cout << "\nOperation not found." << endl;
-}
-
-void MenuSystem::displayAllOperations() {
-    cout << "\n=== ALL OPERATIONS ===" << endl;
-    
-    if (operations.empty()) {
-        cout << "No operations found." << endl;
-        return;
-    }
-    
-    for (const auto& op : operations) {
-        op->display();
-    }
-}
-
-void MenuSystem::deleteOperation() {
-    cout << "\n=== DELETE OPERATION ===" << endl;
-    cout << "Delete functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::searchOperation() {
-    cout << "\n=== SEARCH OPERATION ===" << endl;
-    cout << "Search functionality - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::assignPersonnelToOperation() {
-    cout << "\n=== ASSIGN PERSONNEL TO OPERATION ===" << endl;
-    cout << "Assign personnel - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::assignEquipmentToOperation() {
-    cout << "\n=== ASSIGN EQUIPMENT TO OPERATION ===" << endl;
-    cout << "Assign equipment - detailed implementation in full version" << endl;
-}
-
-void MenuSystem::generateOperationReport() {
-    cout << "\n=== OPERATION REPORT ===" << endl;
-    cout << "Report generation - detailed implementation in full version" << endl;
-}
-
-// Reports Management
-void MenuSystem::generatePersonnelReport() {
-    cout << "\n=== PERSONNEL REPORT ===" << endl;
-    cout << "Total Officers: " << officers.size() << endl;
-    cout << "Total Officers: " << officers.size() << endl;
-    cout << "Total Contractors: " << contractors.size() << endl;
-    cout << "Total Personnel: " << (officers.size() + contractors.size()) << endl;
 }
 
 void MenuSystem::generateEquipmentReport() {
@@ -803,68 +668,83 @@ void MenuSystem::generateEquipmentReport() {
     cout << "Total Weapons: " << weapons.size() << endl;
     cout << "Total Supplies: " << supplies.size() << endl;
     cout << "Total Equipment: " << (weapons.size() + supplies.size()) << endl;
+    
+    // Save to txt file
+    ofstream reportFile("equipment_report.txt");
+    if (reportFile.is_open()) {
+        reportFile << "======== EQUIPMENT REPORT ========\n";
+        reportFile << "Generated: " << Utils::getCurrentDateTime() << "\n\n";
+        reportFile << "Total Weapons: " << weapons.size() << "\n";
+        reportFile << "Total Supplies: " << supplies.size() << "\n";
+        reportFile << "Total Equipment: " << (weapons.size() + supplies.size()) << "\n";
+        
+        double totalWeaponValue = 0;
+        for (const auto& weapon : weapons) {
+            totalWeaponValue += weapon->getTotalValue();
+        }
+        reportFile << "\nTotal Weapon Value: $" << fixed << setprecision(2) << totalWeaponValue << "\n";
+        
+        double totalSupplyValue = 0;
+        for (const auto& supply : supplies) {
+            totalSupplyValue += supply->getTotalValue();
+        }
+        reportFile << "Total Supply Value: $" << fixed << setprecision(2) << totalSupplyValue << "\n";
+        reportFile << "Total Equipment Value: $" << fixed << setprecision(2) << (totalWeaponValue + totalSupplyValue) << "\n";
+        reportFile.close();
+        cout << "\nReport saved to equipment_report.txt" << endl;
+    } else {
+        cout << "\nError: Could not create equipment_report.txt" << endl;
+    }
 }
 
-void MenuSystem::generateInventoryReport() {
-    cout << "\n=== INVENTORY REPORT ===" << endl;
-    double totalWeaponValue = 0;
-    for (const auto& weapon : weapons) {
-        totalWeaponValue += weapon->getTotalValue();
-    }
-    cout << "Total Weapon Value: $" << fixed << setprecision(2) << totalWeaponValue << endl;
+void MenuSystem::generatePersonnelReport() {
+    cout << "\n=== PERSONNEL REPORT ===" << endl;
+    cout << "Total Officers: " << officers.size() << endl;
+    cout << "Total Contractors: " << contractors.size() << endl;
+    cout << "Total Personnel: " << (officers.size() + contractors.size()) << endl;
     
-    double totalSupplyValue = 0;
-    for (const auto& supply : supplies) {
-        totalSupplyValue += supply->getTotalValue();
+    // Calculate total salaries
+    double totalSalary = 0;
+    for (const auto& officer : officers) {
+        totalSalary += officer->getSalary();
     }
-    cout << "Total Supplies Value: $" << fixed << setprecision(2) << totalSupplyValue << endl;
-    cout << "Total Equipment Value: $" << fixed << setprecision(2) << (totalWeaponValue + totalSupplyValue) << endl;
+    for (const auto& contractor : contractors) {
+        totalSalary += contractor->getSalary();
+    }
+    cout << "Total Salary Expense: $" << fixed << setprecision(2) << totalSalary << endl;
+    
+    // Save to txt file
+    ofstream reportFile("personnel_report.txt");
+    if (reportFile.is_open()) {
+        reportFile << "======== PERSONNEL REPORT ========\n";
+        reportFile << "Generated: " << Utils::getCurrentDateTime() << "\n\n";
+        reportFile << "Total Officers: " << officers.size() << "\n";
+        reportFile << "Total Contractors: " << contractors.size() << "\n";
+        reportFile << "Total Personnel: " << (officers.size() + contractors.size()) << "\n";
+        reportFile << "Total Salary Expense: $" << fixed << setprecision(2) << totalSalary << "\n";
+        
+        reportFile << "\n--- OFFICERS ---\n";
+        for (const auto& officer : officers) {
+            reportFile << "ID: " << officer->getID() << " | Name: " << officer->getName() 
+                      << " | Rank: " << officer->getRank() << " | Salary: $" << officer->getSalary() << "\n";
+        }
+        
+        reportFile << "\n--- CONTRACTORS ---\n";
+        for (const auto& contractor : contractors) {
+            reportFile << "ID: " << contractor->getID() << " | Name: " << contractor->getName() 
+                      << " | Salary: $" << contractor->getSalary() << "\n";
+        }
+        reportFile.close();
+        cout << "\nReport saved to personnel_report.txt" << endl;
+    } else {
+        cout << "\nError: Could not create personnel_report.txt" << endl;
+    }
 }
 
 // Audit Log Management
 void MenuSystem::displayAuditLog() {
     if (auditLog != nullptr) {
         auditLog->displayAllEntries();
-    }
-}
-
-void MenuSystem::searchAuditLog() {
-    cout << "\n=== SEARCH AUDIT LOG ===" << endl;
-    cout << "1. Search by Entity Type" << endl;
-    cout << "2. Search by Operation Type" << endl;
-    cout << "3. Search by Entity ID" << endl;
-    cout << "Enter your choice: ";
-    
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    
-    if (auditLog != nullptr) {
-        switch (choice) {
-            case 1: {
-                cout << "Enter entity type: ";
-                string entityType;
-                getline(cin, entityType);
-                auditLog->searchByEntityType(entityType);
-                break;
-            }
-            case 2: {
-                cout << "Enter operation type: ";
-                string opType;
-                getline(cin, opType);
-                auditLog->searchByOperationType(opType);
-                break;
-            }
-            case 3: {
-                cout << "Enter entity ID: ";
-                int entityID;
-                cin >> entityID;
-                auditLog->searchByEntityID(entityID);
-                break;
-            }
-            default:
-                cout << "Invalid choice." << endl;
-        }
     }
 }
 

@@ -66,12 +66,6 @@ public:
     bool isEquipmentRequired(int equipmentID) const;
     int getRequiredEquipmentCount() const;
     
-    // Operation status management
-    void activateOperation();
-    void completeOperation();
-    void abortOperation();
-    bool isActive() const;
-    
     // Operators
     bool operator<(const Operation& other) const;  // Compare by start date
     bool operator==(const Operation& other) const;

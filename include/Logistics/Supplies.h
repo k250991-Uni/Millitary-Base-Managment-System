@@ -31,22 +31,15 @@ class Supplies : public Equipment {
         void setExpirationDate(const std::string& date);
         void setMinStockLevel(int level);
         void setSupplier(const std::string& supp);
-        void updateQuantity(int change);
         bool isExpired() const;
         bool isLowOnStock() const;
-        bool isExpiringSoon(int dayThreshold) const;
-        int getDaysUntilExpiration() const;
-        int getReorderQuantity() const;
         void consumeSupply(int amount);
         void replenishSupply(int amount);
 
         bool operator<(const Supplies& other) const;
         bool operator==(const Supplies& other) const;
-        Supplies operator+(const Supplies& other) const;
 
         void display() const override;
-
-        friend std::ostream& operator<<(std::ostream& out, const Supplies& supplies);
 
         ~Supplies();
 };

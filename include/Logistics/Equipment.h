@@ -36,7 +36,5 @@ class Equipment : public BaseEntity {
         bool operator<(const Equipment& other) const;
         bool operator==(const Equipment& other) const;
 
-        friend std::ostream& operator<<(std::ostream& out, const Equipment& equipment);
-
         virtual ~Equipment();
 };

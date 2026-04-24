@@ -25,46 +25,31 @@ class MenuSystem{
     //menu display func
     void displayMainMenu();
     void displayPersonnelMenu();
-    void displayOperationMenu();
     void displayLogisticsMenu();
-    void displayReportMenu();
     void displayOperationsMenu();
     void displayReportsMenu();
-    void displayAuditMenu();
 
-    //personnel mangemnet 
+    //personnel management 
     void addOfficer();
     void addContractor();
-    void updatePersonnel();
     void deletePersonnel();
-    void searchPersonnel();
     void displayAllPersonnel();
-    void assignWeapon();
     void promoteOfficer();
 
     //logistics management
     void addWeapon();
     void addSupplies();
-    void updateEquipment();
     void deleteEquipment();
-    void searchEquipment();
     void displayAllEquipment();
-    void checkInventory();
 
-    //operations mangamnet
+    //operations management
     void createOperation();
-    void updateOperationStatus();
     void deleteOperation();
-    void displayAllOperation();
-    void searchOperation();
-    void assignPersonnelToOperation();
-    void assignEquipmentToOperation();
-    void generateOperationReport();
+    void displayAllOperations();
 
     //Report
     void generatePersonnelReport();
     void generateEquipmentReport();
-    void generateInventoryReport();
 
     //get choice
     int getMainMenuChoice();
@@ -72,12 +57,6 @@ class MenuSystem{
     int getLogisticsMenuChoice();
     int getOperationsMenuChoice();
     int getReportsMenuChoice();
-    int getAuditMenuChoice();
-
-    //Input 
-    string getPersonnelID();
-    string getEquipmentID();
-    string getOperationID();
 
     //save/load
     void saveAllData();
@@ -87,15 +66,8 @@ class MenuSystem{
     void handleMainMenu(int choice);
     void handlePersonnelMenu(int choice);
     void handleLogisticsMenu(int choice);
-    void handleOperationMenu(int choice);
-    void handleReportMenu(int choice);
     void handleOperationsMenu(int choice);
     void handleReportsMenu(int choice);
-    void handleAuditMenu(int choice);
     void displayAuditLog();
-    void searchAuditLog();
-    void displayAllOperations();
-    void issuedAmmo();
-    void checkExpiredSupplies();
 };
 #endif

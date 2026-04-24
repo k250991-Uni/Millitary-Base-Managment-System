@@ -34,7 +34,6 @@ class Weapon : public Equipment {
         std::string getCaliber() const;
         int getCurrentAmmunition() const { return ammunition; }
         int getMaxAmmunitionCapacity() const { return magazineCapacity; }
-        int getAmmunitionPercentage() const;
         int getWeaponCount();
         bool isWeaponLocked() const;
         bool hasAdequateAmmunition(int required) const;
@@ -44,8 +43,6 @@ class Weapon : public Equipment {
         bool operator==(const Weapon& other) const;
 
         void display() const override;
-        
-        friend std::ostream& operator<<(std::ostream& out, const Weapon& weapon);
 
         ~Weapon();
 };
