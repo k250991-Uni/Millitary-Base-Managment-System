@@ -1,4 +1,4 @@
-#include "personnel/Offiicer.h"
+#include "personnel/Officer.h"
 #include "utilities/Utils.h"
 #include "utilities/CustomExceptions.h"
 #include <iostream>

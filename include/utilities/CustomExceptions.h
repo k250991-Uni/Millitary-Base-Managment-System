@@ -4,20 +4,20 @@
 #include <exception>
 #include <string>
 using namespace std;
-class MillitaryException: public exception {
+class MilitaryException: public exception {
     protected:
     string message;
     public:
-    MillitaryException(const string& msg = "Unkown military system error"):message(msg){}
-    virtual ~MillitaryException(){
+    MilitaryException(const string& msg = "Unknown military system error"):message(msg){}
+    virtual ~MilitaryException(){
     }
     virtual const char* what() const noexcept override{ return message.c_str();}
 };
 
 // for personnel related exception 
-class PersonnelException : public MillitaryException{
+class PersonnelException : public MilitaryException{
     public:
-    PersonnelException(const string& msg = "Personnel error occured"):MillitaryException("PERSONNEL ERROR:" + msg){}
+    PersonnelException(const string& msg = "Personnel error occured"):MilitaryException("PERSONNEL ERROR:" + msg){}
 };
 class InvalidRankException : public PersonnelException{
     public:
@@ -25,20 +25,20 @@ class InvalidRankException : public PersonnelException{
 
     }
 };
-class PerosnnalNotFoundException : public PersonnelException{
+class PersonnelNotFoundException : public PersonnelException{
 public:
-PerosnnalNotFoundException(int id):PersonnelException("Personnel with ID"+ to_string(id) + " not found"){
+PersonnelNotFoundException(int id):PersonnelException("Personnel with ID"+ to_string(id) + " not found"){
 
 }
 };
 //for logistics related
-class LogisticsException: public MillitaryException{
+class LogisticsException: public MilitaryException{
  public:
- LogisticsException(const string&msg = " Logistics error occured"):MillitaryException("LOGISTICS ERROR: "+  msg){}
+ LogisticsException(const string&msg = " Logistics error occured"):MilitaryException("LOGISTICS ERROR: "+  msg){}
 };
-class InsufficientSuppyException : public LogisticsException{
+class InsufficientSupplyException : public LogisticsException{
    public:
-   InsufficientSuppyException(const string& item,int required,int available):LogisticsException(item + " insufficient. Requied: " + to_string(required) + ",Available:" + to_string(available)){}
+   InsufficientSupplyException(const string& item,int required,int available):LogisticsException(item + " insufficient. Requied: " + to_string(required) + ",Available:" + to_string(available)){}
 };
 class WeaponException : public LogisticsException{
     public:
@@ -46,32 +46,32 @@ class WeaponException : public LogisticsException{
 };
 
 // for operation related
-class OperationException : public MillitaryException{
+class OperationException : public MilitaryException{
 public:
-OperationException(const string& msg = "Operation error occured"):MillitaryException("OPERATION ERROR: "+ msg){}
+OperationException(const string& msg = "Operation error occured"):MilitaryException("OPERATION ERROR: "+ msg){}
 };
 
 class InvalidOperationStatusException : public OperationException {
     public:
-    InvalidOperationStatusException(const string& status): OperationException("Inavlid operatioon status: "+ status){}
+    InvalidOperationStatusException(const string& status): OperationException("Invalid operation status: "+ status){}
 };
 
 // for files
-class FileExceptioon : public MillitaryException{
+class FileException : public MilitaryException{
 public:
-FileExceptioon(const string& msg = "File error occured"):
-MillitaryException("FILE ERROR: "+ msg){}
+FileException(const string& msg = "File error occured"):
+MilitaryException("FILE ERROR: "+ msg){}
 
 };
-class FileNotFoundException : public FileExceptioon{
+class FileNotFoundException : public FileException{
     public:
     FileNotFoundException(const string& filename):
-    FileExceptioon("File not found: " + filename){}
+    FileException("File not found: " + filename){}
 };
 // for validation
 
-class ValidationException : public MillitaryException {
+class ValidationException : public MilitaryException {
     public :
-    ValidationException(const string& msg = "Validation failed") : MillitaryException("VALIDATION ERROR: "+ msg){}
+    ValidationException(const string& msg = "Validation failed") : MilitaryException("VALIDATION ERROR: "+ msg){}
 };
 #endif

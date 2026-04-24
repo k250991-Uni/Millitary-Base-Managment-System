@@ -1,115 +1,192 @@
-# include <iostream>
-# include <string>
-# include <fstream>
-# include <sstream>
-# include "Equipment.h"
-# include "Weapon.h"
+#include "logistics/Weapon.h"
+#include "utilities/Utils.h"
+#include "utilities/CustomExceptions.h"
+#include <iostream>
+#include <iomanip>
 
-int Weapon::totalWeapons = 0;
+using namespace std;
 
-Weapon::Weapon(std::string id, std::string name, std::string caliber, std::string fireMode, int maxAmmo) 
-        : Equipment(id, name, /*cond*/) , caliber(caliber), fireMode(fireMode), maxAmmunitionCapacity(maxAmmo)
-        /*what to initialize the currentAmmunition */ {totalWeapons++;}
+// Initialize static counter
+int Weapon::weaponCount = 0;
 
-
-// the file is in the format id|name|condition|acquisitionDate|caliber|firemode|currentAmmunition|maxAmmunitionCapacity
-void Weapon::saveToFile(std::string fileName) {
-    std::ofstream out("Weapon_Data.txt", std::ios::app);
-    if(!out) {
-        std::cout << "Could not open the file.\n";
-        return;
+// Constructor
+Weapon::Weapon(const string& name, const string& code, const string& type,
+               int qty, double cost, const string& loc, int ammo, int magCap, const string& cal)
+    : Equipment(name, code, qty, cost, loc), weaponType(type), ammunition(ammo),
+      magazineCapacity(magCap), caliber(cal), isLocked(true) {
+    
+    if (ammo < 0 || magCap < 0) {
+        throw ValidationException("Ammunition and magazine capacity cannot be negative");
     }
-
+    
+    weaponCount++;
+    condition = "Serviceable";
+    logActivity("Weapon created: " + type + " | Caliber: " + cal);
 }
-void Weapon::loadFromFile(std::string fileName) {
-    std::ifstream in("Weapon_Data.txt");
 
-    if(!in){
-        std::cout << "Could not open the file.\n";
-        return;
+// Destructor
+Weapon::~Weapon() {
+    weaponCount--;
+}
+
+// Validate condition
+bool Weapon::validateCondition(const string& cond) const {
+    vector<string> validConditions = {"Serviceable", "Unserviceable", "Maintenance", "Locked"};
+    for (const auto& c : validConditions) {
+        if (Utils::toLowerCase(cond) == Utils::toLowerCase(c)) {
+            return true;
+        }
     }
-
-    in >> totalWeapons;
-    in.ignore();
-
-    std::string line;
-
-    while(getline(in, line)){
-        std::stringstream ss(line);
-
-        std::string temp1, temp2, temp3, temp4, temp5;
-
-        //std::getline(ss, id, "|");    // id
-        std::getline(ss, temp1, '|');   //name
-        std::getline(ss, temp2, '|');   //condition
-        std::getline(ss, temp3, '|');   //acquisitionDate
-        std::getline(ss, caliber, '|'); //caliber
-        std::getline(ss, fireMode, '|');//firemode
-        std::getline(ss, temp4, '|');   //currentAmmunition
-        std::getline(ss, temp5, '|');   //maxAmmunitionCapacity
-
-        setEquipmentName(temp1);
-        setCondition(temp2);
-        setAcquisitionDate(temp3);
-        maxAmmunitionCapacity = std::stoi(temp4);
-        currentAmmunition = std::stoi(temp5);
-
-    }
+    return false;
 }
 
-void Weapon::fireWeapon(int rounds) {
-    if((currentAmmunition - rounds) > 0) {currentAmmunition -= rounds; std::cout << "Fired\n";}
-    else {std::cout << "Not enough ammunition left, ammunition left are: " << currentAmmunition << std::endl;}
-}
-void Weapon::reload(int roundsAdded){
-    if((currentAmmunition + roundsAdded) <= maxAmmunitionCapacity) {currentAmmunition += roundsAdded; std::cout << "Reloaded\n";}
-    else {std::cout << "Not enought sapce, spaces left are: " << maxAmmunitionCapacity - currentAmmunition << std::endl;}
-}
-void Weapon::unloadAmmo(){
-    currentAmmunition = 0;
-    std::cout << "Ammo unloaded\n";
+// Display weapon information
+void Weapon::display() const {
+    cout << "\n=== WEAPON INFORMATION ===" << endl;
+    cout << "ID: " << getID() << endl;
+    cout << "Name: " << name << endl;
+    cout << "Code: " << equipmentCode << endl;
+    cout << "Type: " << weaponType << endl;
+    cout << "Caliber: " << caliber << endl;
+    cout << "Quantity: " << quantity << endl;
+    cout << "Unit Cost: $" << fixed << setprecision(2) << unitCost << endl;
+    cout << "Total Value: $" << fixed << setprecision(2) << getTotalValue() << endl;
+    cout << "Condition: " << condition << endl;
+    cout << "Location: " << location << endl;
+    cout << "Ammunition: " << ammunition << "/" << magazineCapacity << " (" 
+         << getAmmunitionPercentage() << "%)" << endl;
+    cout << "Security Lock: " << (isLocked ? "LOCKED" : "UNLOCKED") << endl;
+    cout << "Last Service: " << lastServiceDate << endl;
+    cout << "Created: " << getDateCreated() << endl;
+    cout << "Last Modified: " << getLastModified() << endl;
+    cout << "===========================\n" << endl;
 }
 
-std::string Weapon::getEquipmentType() {
-    // what to do
+// Save to file
+void Weapon::saveToFile(const string& filename) const {
+    cout << "Saving weapon to " << filename << endl;
 }
-std::string Weapon::getEntityType() {
-    // what to do
+
+// Load from file
+void Weapon::loadFromFile(const string& filename) {
+    cout << "Loading weapon from " << filename << endl;
 }
-std::string Weapon::getCaliber() {
+
+// Set weapon type
+void Weapon::setWeaponType(const string& type) {
+    weaponType = type;
+    updateLastModified();
+    logActivity("Weapon type updated to: " + type);
+}
+
+string Weapon::getWeaponType() const {
+    return weaponType;
+}
+
+string Weapon::getCaliber() const {
     return caliber;
 }
-std::string Weapon::getFireMode() {
-    return fireMode;
-}
-int Weapon::getCurrentAmmunition() {
-    return currentAmmunition;
-}
-int Weapon::getMaxAmmunitionCapacity() {
-    return maxAmmunitionCapacity;
-}
-int Weapon::getTotalWeapons() {
-    return totalWeapons;
+
+bool Weapon::isWeaponLocked() const {
+    return isLocked;
 }
 
-void Weapon::display(){
-    // do it later
+// Set caliber
+void Weapon::setCaliber(const string& cal) {
+    caliber = cal;
+    updateLastModified();
+    logActivity("Caliber updated to: " + cal);
 }
 
-bool Weapon::operator<(Weapon& other) {
-    
+// Add ammunition
+void Weapon::addAmmunition(int amount) {
+    if (amount < 0) {
+        throw ValidationException("Cannot add negative ammunition");
+    }
+    ammunition += amount;
+    if (ammunition > magazineCapacity) {
+        ammunition = magazineCapacity;
+    }
+    updateLastModified();
+    logActivity("Added " + to_string(amount) + " ammunition. Total: " + to_string(ammunition));
 }
-bool Weapon::operator==(Weapon& other) {
 
+// Remove ammunition
+void Weapon::removeAmmunition(int amount) {
+    if (amount < 0) {
+        throw ValidationException("Cannot remove negative ammunition");
+    }
+    if (amount > ammunition) {
+        throw InsufficientSupplyException("Ammunition", amount, ammunition);
+    }
+    ammunition -= amount;
+    updateLastModified();
+    logActivity("Removed " + to_string(amount) + " ammunition. Total: " + to_string(ammunition));
 }
-Weapon Weapon::operator+(Weapon& other){
 
+// Check adequate ammunition
+bool Weapon::hasAdequateAmmunition(int required) const {
+    return ammunition >= required;
 }
 
-void Weapon::display() {
-
+// Get ammunition percentage
+int Weapon::getAmmunitionPercentage() const {
+    if (magazineCapacity == 0) return 0;
+    return (ammunition * 100) / magazineCapacity;
 }
 
-Weapon::~Weapon() {
-    totalWeapons--;
+// Lock weapon
+void Weapon::lockWeapon() {
+    isLocked = true;
+    condition = "Locked";
+    updateLastModified();
+    logActivity("Weapon locked");
+}
+
+// Unlock weapon
+void Weapon::unlockWeapon() {
+    isLocked = false;
+    condition = "Serviceable";
+    updateLastModified();
+    logActivity("Weapon unlocked");
+}
+
+// Check if can be issued
+bool Weapon::canBeIssued() const {
+    return !isLocked && condition == "Serviceable" && ammunition > 0;
+}
+
+// Perform maintenance
+void Weapon::performMaintenance() {
+    condition = "Serviceable";
+    updateLastServiceDate();
+    logActivity("Maintenance performed");
+}
+
+string Weapon::getEntityType() const {
+    return "Weapon";
+}
+
+string Weapon::getEquipmentType() const {
+    return weaponType;
+}
+
+// Operator< for comparison by ammunition percentage
+bool Weapon::operator<(const Weapon& other) const {
+    return getAmmunitionPercentage() < other.getAmmunitionPercentage();
+}
+
+// Operator== for comparison
+bool Weapon::operator==(const Weapon& other) const {
+    return BaseEntity::operator==(other);
+}
+
+// Stream output operator
+ostream& operator<<(ostream& out, const Weapon& weapon) {
+    out << "Weapon - ID: " << weapon.getID()
+        << " | Type: " << weapon.getWeaponType()
+        << " | Caliber: " << weapon.getCaliber()
+        << " | Ammo: " << weapon.getCurrentAmmunition() << "/" << weapon.getMaxAmmunitionCapacity()
+        << " | Status: " << (weapon.isWeaponLocked() ? "LOCKED" : "UNLOCKED");
+    return out;
 }

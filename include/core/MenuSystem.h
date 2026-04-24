@@ -13,6 +13,13 @@ class Supplies;
 class Operation;
 
 class MenuSystem{
+    public:
+    MenuSystem();
+    ~MenuSystem();
+    void run();
+    void setRunning(bool running){ isRunning = running; }
+    bool getRunning() const { return isRunning;}
+    
     private:
     bool isRunning;
     //menu display func
@@ -21,11 +28,14 @@ class MenuSystem{
     void displayOperationMenu();
     void displayLogisticsMenu();
     void displayReportMenu();
+    void displayOperationsMenu();
+    void displayReportsMenu();
+    void displayAuditMenu();
 
     //personnel mangemnet 
     void addOfficer();
     void addContractor();
-    void updtaePersonnel();
+    void updatePersonnel();
     void deletePersonnel();
     void searchPersonnel();
     void displayAllPersonnel();
@@ -38,19 +48,23 @@ class MenuSystem{
     void updateEquipment();
     void deleteEquipment();
     void searchEquipment();
-    void displayAllEquipement();
+    void displayAllEquipment();
     void checkInventory();
 
     //operations mangamnet
     void createOperation();
     void updateOperationStatus();
     void deleteOperation();
-    void siaplayAllOPeration();
+    void displayAllOperation();
+    void searchOperation();
     void assignPersonnelToOperation();
+    void assignEquipmentToOperation();
+    void generateOperationReport();
 
     //Report
     void generatePersonnelReport();
     void generateEquipmentReport();
+    void generateInventoryReport();
 
     //get choice
     int getMainMenuChoice();
@@ -58,22 +72,16 @@ class MenuSystem{
     int getLogisticsMenuChoice();
     int getOperationsMenuChoice();
     int getReportsMenuChoice();
+    int getAuditMenuChoice();
 
     //Input 
-    string getPeronnelID();
-    string getEquipemtnID();
+    string getPersonnelID();
+    string getEquipmentID();
     string getOperationID();
 
     //save/load
-    void savedAlData();
+    void saveAllData();
     void loadAllData();
-
-    public:
-    MenuSystem();
-    ~MenuSystem();
-
-    //main loop 
-    void run();
 
     //handlers
     void handleMainMenu(int choice);
@@ -81,13 +89,13 @@ class MenuSystem{
     void handleLogisticsMenu(int choice);
     void handleOperationMenu(int choice);
     void handleReportMenu(int choice);
-    
-   //setter / getter
-   void setRunning(bool running){
-    isRunning = running;
-   }
-   bool getRunning() const { return isRunning;}
-
-
+    void handleOperationsMenu(int choice);
+    void handleReportsMenu(int choice);
+    void handleAuditMenu(int choice);
+    void displayAuditLog();
+    void searchAuditLog();
+    void displayAllOperations();
+    void issuedAmmo();
+    void checkExpiredSupplies();
 };
 #endif

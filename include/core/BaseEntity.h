@@ -25,8 +25,8 @@ class BaseEntity : public ILoggable {
 
    //getters
    int getID() const { return entityID; }
-   string getNmae() const { return name;}
-   string getDateCreated() const { return dateCreated;}
+   std::string getName() const { return name;}
+   std::string getDateCreated() const { return dateCreated;}
    string getLastModified() const { return lastModified;}
    static int getTotalEntities() { return entityCounter; }
 

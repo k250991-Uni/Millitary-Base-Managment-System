@@ -34,6 +34,7 @@ public:
     // Display utilities
     static void printHeader(const string& title);
     static void printLine(int length = 60);
+    static std::string createString(int length, char character);
     static void printSeparator();
     static void clearScreen();
     static void pauseExecution(const string& message = "Press Enter to continue...");

@@ -81,7 +81,7 @@ string Utils::getCurrentDateTime() {
     struct tm* timeinfo = localtime(&now);
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
-    return string(buffer);
+    return std::string(buffer);
 }
 
 string Utils::getCurrentDate() {
@@ -89,7 +89,7 @@ string Utils::getCurrentDate() {
     struct tm* timeinfo = localtime(&now);
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%Y-%m-%d", timeinfo);
-    return string(buffer);
+    return std::string(buffer);
 }
 
 string Utils::getCurrentTime() {
@@ -97,7 +97,7 @@ string Utils::getCurrentTime() {
     struct tm* timeinfo = localtime(&now);
     char buffer[80];
     strftime(buffer, sizeof(buffer), "%H:%M:%S", timeinfo);
-    return string(buffer);
+    return std::string(buffer);
 }
 
 // Numeric utilities
@@ -126,15 +126,19 @@ void Utils::printLine(int length) {
     cout << endl;
 }
 
+string Utils::createString(int length, char character) {
+    return std::string(length, character);
+}
+
 void Utils::printSeparator() {
     printLine(60);
 }
 
 void Utils::clearScreen() {
     #ifdef _WIN32
-        system("cls");
+        system("cls"); //for windows
     #else
-        system("clear");
+        system("clear");   // for mac
     #endif
 }
 
@@ -161,7 +165,7 @@ bool Utils::deleteFile(const string& filename) {
 // Military-specific validations
 bool Utils::isValidRank(const string& rank) {
     vector<string> validRanks = {
-        "Private", "Corporal", "Sergeant", "Lieutenant", "Captain",
+        "Private", "Sergeant", "Lieutenant", "Captain",
         "Major", "Colonel", "General", "Civilian", "Contractor"
     };
     
@@ -191,7 +195,7 @@ bool Utils::isValidWeaponCondition(const string& condition) {
 }
 
 bool Utils::isValidOperationStatus(const string& status) {
-    vector<string> validStatuses = {"Planned", "Active", "Completed", "Aborted", "On Hold"};
+    vector<string> validStatuses = {"Planned", "Active", "Completed", "On Hold"};
     
     for (const auto& s : validStatuses) {
         if (toLowerCase(status) == toLowerCase(s)) {
@@ -202,7 +206,7 @@ bool Utils::isValidOperationStatus(const string& status) {
 }
 
 bool Utils::isValidSecurityClearance(const string& clearance) {
-    vector<string> validClearances = {"Confidential", "Secret", "Top Secret", "TS/SCI"};
+    vector<string> validClearances = {"Confidential", "Secret", "Top Secret"};
     
     for (const auto& clear : validClearances) {
         if (toLowerCase(clearance) == toLowerCase(clear)) {
