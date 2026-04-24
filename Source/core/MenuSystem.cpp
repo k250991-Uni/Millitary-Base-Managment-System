@@ -61,7 +61,8 @@ void MenuSystem::displayMainMenu() {
     cout << "2. Logistics Management" << endl;
     cout << "3. Operations Management" << endl;
     cout << "4. Reports & Analytics" << endl;
-    cout << "5. Save & Exit" << endl;
+    cout << "5. Audit Log" << endl;
+    cout << "6. Save & Exit" << endl;
     cout << "\nEnter your choice: ";
 }
 
@@ -109,6 +110,14 @@ void MenuSystem::handleMainMenu(int choice) {
             }
             break;
         case 5:
+            while (true) {
+                displayAuditMenu();
+                int aChoice = getAuditMenuChoice();
+                if (aChoice == 0) break;
+                handleAuditMenu(aChoice);
+            }
+            break;
+        case 6:
             saveAllData();
             isRunning = false;
             break;
@@ -682,14 +691,14 @@ void MenuSystem::generateEquipmentReport() {
         for (const auto& weapon : weapons) {
             totalWeaponValue += weapon->getTotalValue();
         }
-        reportFile << "\nTotal Weapon Value: $" << fixed << setprecision(2) << totalWeaponValue << "\n";
+        reportFile << "\nTotal Weapon Value: Rs" << fixed << setprecision(2) << totalWeaponValue << "\n";
         
         double totalSupplyValue = 0;
         for (const auto& supply : supplies) {
             totalSupplyValue += supply->getTotalValue();
         }
-        reportFile << "Total Supply Value: $" << fixed << setprecision(2) << totalSupplyValue << "\n";
-        reportFile << "Total Equipment Value: $" << fixed << setprecision(2) << (totalWeaponValue + totalSupplyValue) << "\n";
+        reportFile << "Total Supply Value: Rs" << fixed << setprecision(2) << totalSupplyValue << "\n";
+        reportFile << "Total Equipment Value: Rs" << fixed << setprecision(2) << (totalWeaponValue + totalSupplyValue) << "\n";
         reportFile.close();
         cout << "\nReport saved to equipment_report.txt" << endl;
     } else {
@@ -711,7 +720,7 @@ void MenuSystem::generatePersonnelReport() {
     for (const auto& contractor : contractors) {
         totalSalary += contractor->getSalary();
     }
-    cout << "Total Salary Expense: $" << fixed << setprecision(2) << totalSalary << endl;
+    cout << "Total Salary Expense: Rs" << fixed << setprecision(2) << totalSalary << endl;
     
     // Save to txt file
     ofstream reportFile("personnel_report.txt");
@@ -721,18 +730,18 @@ void MenuSystem::generatePersonnelReport() {
         reportFile << "Total Officers: " << officers.size() << "\n";
         reportFile << "Total Contractors: " << contractors.size() << "\n";
         reportFile << "Total Personnel: " << (officers.size() + contractors.size()) << "\n";
-        reportFile << "Total Salary Expense: $" << fixed << setprecision(2) << totalSalary << "\n";
+        reportFile << "Total Salary Expense: Rs" << fixed << setprecision(2) << totalSalary << "\n";
         
         reportFile << "\n--- OFFICERS ---\n";
         for (const auto& officer : officers) {
             reportFile << "ID: " << officer->getID() << " | Name: " << officer->getName() 
-                      << " | Rank: " << officer->getRank() << " | Salary: $" << officer->getSalary() << "\n";
+                      << " | Rank: " << officer->getRank() << " | Salary: Rs" << officer->getSalary() << "\n";
         }
         
         reportFile << "\n--- CONTRACTORS ---\n";
         for (const auto& contractor : contractors) {
             reportFile << "ID: " << contractor->getID() << " | Name: " << contractor->getName() 
-                      << " | Salary: $" << contractor->getSalary() << "\n";
+                      << " | Salary: Rs" << contractor->getSalary() << "\n";
         }
         reportFile.close();
         cout << "\nReport saved to personnel_report.txt" << endl;
@@ -742,9 +751,94 @@ void MenuSystem::generatePersonnelReport() {
 }
 
 // Audit Log Management
-void MenuSystem::displayAuditLog() {
+void MenuSystem::displayAuditMenu() {
+    Utils::clearScreen();
+    Utils::printHeader("AUDIT LOG MANAGEMENT");
+    cout << "\n1. View All Audit Entries" << endl;
+    cout << "2. Search by Entity Type" << endl;
+    cout << "3. Search by Operation Type" << endl;
+    cout << "4. Search by Entity ID" << endl;
+    cout << "0. Back to Main Menu" << endl;
+    cout << "\nEnter your choice: ";
+}
+
+int MenuSystem::getAuditMenuChoice() {
+    int choice;
+    cin >> choice;
+    cin.ignore();
+    return choice;
+}
+
+void MenuSystem::handleAuditMenu(int choice) {
+    switch (choice) {
+        case 1:
+            viewAllAuditEntries();
+            break;
+        case 2:
+            searchAuditByEntityType();
+            break;
+        case 3:
+            searchAuditByOperationType();
+            break;
+        case 4:
+            searchAuditByEntityID();
+            break;
+        default:
+            cout << "Invalid choice." << endl;
+    }
+    Utils::pauseExecution("Press Enter to continue...");
+}
+
+void MenuSystem::viewAllAuditEntries() {
     if (auditLog != nullptr) {
+        cout << "\n";
+        Utils::printHeader("ALL AUDIT ENTRIES");
         auditLog->displayAllEntries();
+    } else {
+        cout << "\nError: Audit log not available." << endl;
+    }
+}
+
+void MenuSystem::searchAuditByEntityType() {
+    string entityType;
+    cout << "\nEnter entity type to search (e.g., Officer, Contractor, Weapon, Supplies, Operation): ";
+    getline(cin, entityType);
+    
+    if (auditLog != nullptr) {
+        cout << "\n";
+        Utils::printHeader("AUDIT ENTRIES FOR ENTITY TYPE: " + entityType);
+        auditLog->searchByEntityType(entityType);
+    } else {
+        cout << "\nError: Audit log not available." << endl;
+    }
+}
+
+void MenuSystem::searchAuditByOperationType() {
+    string operationType;
+    cout << "\nEnter operation type to search (e.g., ADD, UPDATE, DELETE, PROMOTE): ";
+    getline(cin, operationType);
+    
+    if (auditLog != nullptr) {
+        cout << "\n";
+        Utils::printHeader("AUDIT ENTRIES FOR OPERATION TYPE: " + operationType);
+        auditLog->searchByOperationType(operationType);
+    } else {
+        cout << "\nError: Audit log not available." << endl;
+    }
+}
+
+void MenuSystem::searchAuditByEntityID() {
+    int entityID;
+    cout << "\nEnter entity ID to search: ";
+    cin >> entityID;
+    cin.ignore();
+    
+    if (auditLog != nullptr) {
+        cout << "\n";
+        Utils::printHeader("AUDIT ENTRIES FOR ENTITY ID: " + to_string(entityID));
+        auditLog->searchByEntityID(entityID);
+    } else {
+        cout << "\nError: Audit log not available." << endl;
     }
 }
 

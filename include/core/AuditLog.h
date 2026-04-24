@@ -1,33 +1,32 @@
 #ifndef AUDIT_LOG_H
 #define AUDIT_LOG_H
 
-#include <iostream>
+#include <iosfwd>
 #include <string>
 #include <vector>
-using namespace std;
 
 // AuditLog entry for tracking system operations
 class AuditLogEntry {
 private:
     int entryID;                // Unique ID for audit entry
-    string timestamp;           // When operation occurred
-    string operationType;       // Type of operation (ADD, UPDATE, DELETE, etc.)
-    string entityType;          // Type of entity affected
+    std::string timestamp;      // When operation occurred
+    std::string operationType;  // Type of operation (ADD, UPDATE, DELETE, etc.)
+    std::string entityType;     // Type of entity affected
     int entityID;               // ID of affected entity
-    string details;             // Additional operation details
+    std::string details;        // Additional operation details
     static int entryCounter;    // Track total entries
     
 public:
-    AuditLogEntry(const string& opType, const string& entType, int eID, const string& details);
+    AuditLogEntry(const std::string& opType, const std::string& entType, int eID, const std::string& details);
     ~AuditLogEntry();
     
     // Getters
     int getEntryID() const { return entryID; }
-    string getTimestamp() const { return timestamp; }
-    string getOperationType() const { return operationType; }
-    string getEntityType() const { return entityType; }
+    std::string getTimestamp() const { return timestamp; }
+    std::string getOperationType() const { return operationType; }
+    std::string getEntityType() const { return entityType; }
     int getEntityID() const { return entityID; }
-    string getDetails() const { return details; }
+    std::string getDetails() const { return details; }
     static int getTotalEntries() { return entryCounter; }
     
     // Display audit entry
@@ -38,28 +37,28 @@ public:
     bool operator<(const AuditLogEntry& other) const;
     
     // Stream operators
-    friend ostream& operator<<(ostream& out, const AuditLogEntry& entry);
+    friend std::ostream& operator<<(std::ostream& out, const AuditLogEntry& entry);
 };
 
 // AuditLog manager for storing and managing audit entries
 class AuditLog {
 private:
-    vector<AuditLogEntry*> entries;
-    string logFilePath;
+    std::vector<AuditLogEntry*> entries;
+    std::string logFilePath;
     
 public:
-    AuditLog(const string& logPath = "audit_log.txt");
+    AuditLog(const std::string& logPath = "audit_log.txt");
     ~AuditLog();
     
     // Add entry to audit log
-    void addEntry(const string& opType, const string& entType, int eID, const string& details);
+    void addEntry(const std::string& opType, const std::string& entType, int eID, const std::string& details);
     
     // Display all entries
     void displayAllEntries() const;
     
     // Search entries
-    void searchByEntityType(const string& entityType) const;
-    void searchByOperationType(const string& operationType) const;
+    void searchByEntityType(const std::string& entityType) const;
+    void searchByOperationType(const std::string& operationType) const;
     void searchByEntityID(int entityID) const;
     
     // File operations

@@ -51,6 +51,15 @@ class MenuSystem{
     void generatePersonnelReport();
     void generateEquipmentReport();
 
+    //audit menu
+    void displayAuditMenu();
+    int getAuditMenuChoice();
+    void handleAuditMenu(int choice);
+    void viewAllAuditEntries();
+    void searchAuditByEntityType();
+    void searchAuditByOperationType();
+    void searchAuditByEntityID();
+
     //get choice
     int getMainMenuChoice();
     int getPersonnelMenuChoice();
@@ -68,6 +77,5 @@ class MenuSystem{
     void handleLogisticsMenu(int choice);
     void handleOperationsMenu(int choice);
     void handleReportsMenu(int choice);
-    void displayAuditLog();
 };
 #endif
