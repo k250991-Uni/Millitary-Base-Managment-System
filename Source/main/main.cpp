@@ -24,11 +24,13 @@ void initializeSystem() {
         
         Utils::pauseExecution("\nPress Enter to continue to main menu...");
     }
+    // Triggered when a domain-level setup check fails (validation, file, logistics, etc.).
     catch (const MilitaryException& e) {
         cout << "\nCRITICAL ERROR during initialization: " << e.what() << endl;
         cout << "System cannot continue. Please check your configuration.\n" << endl;
         throw;
     }
+    // Triggered for unexpected standard-library/runtime failures during startup.
     catch (const exception& e) {
         cout << "\nUnexpected error during initialization: " << e.what() << endl;
         cout << "System cannot continue.\n" << endl;
@@ -44,6 +46,7 @@ void cleanupSystem() {
         cout << "Finalizing audit logs" << endl;
         cout << "\nSystem cleanup complete" << endl;
     }
+    // Triggered if cleanup steps fail (for example I/O or other runtime issues).
     catch (const exception& e) {
         cout << "Error during cleanup: " << e.what() << endl;
     }
@@ -67,6 +70,7 @@ int main() {
         
         return 0;
     }
+    // Triggered when business-rule exceptions escape main flow (invalid states or operations).
     catch (const MilitaryException& e) {
         cout << "\n" << Utils::createString(60, '=') << endl;
         cout << "CRITICAL ERROR: " << e.what() << endl;
@@ -75,6 +79,7 @@ int main() {
         cleanupSystem();
         return 1;
     }
+    // Triggered for all other unhandled standard exceptions not covered above.
     catch (const exception& e) {
         cout << "\n" << Utils::createString(60, '=') << endl;
         cout << "UNEXPECTED ERROR: " << e.what() << endl;

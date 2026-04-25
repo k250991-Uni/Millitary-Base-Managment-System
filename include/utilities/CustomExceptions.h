@@ -27,7 +27,7 @@ class InvalidRankException : public PersonnelException{
 };
 class PersonnelNotFoundException : public PersonnelException{
 public:
-PersonnelNotFoundException(int id):PersonnelException("Personnel with ID"+ to_string(id) + " not found"){
+PersonnelNotFoundException(int id):PersonnelException("Personnel with ID "+ to_string(id) + " not found"){
 
 }
 };

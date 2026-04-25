@@ -14,7 +14,7 @@
 
 using namespace std;
 
-// Shared lists
+// dynamic containers of objs
 vector<Officer*> officers;
 vector<Contractor*> contractors;
 vector<Weapon*> weapons;
@@ -101,7 +101,7 @@ double MenuSystem::readValidatedDouble(const string& prompt) {
     }
 }
 
-string MenuSystem::readValidatedLine(const string& prompt, bool allowEmpty) {
+string MenuSystem::readValidatedLine(const string& prompt, bool CheckEmpty) {
     if (!prompt.empty()) {
         cout << prompt;
     }
@@ -109,7 +109,7 @@ string MenuSystem::readValidatedLine(const string& prompt, bool allowEmpty) {
     string input;
     getline(cin, input);
 
-    if (!allowEmpty && input.find_first_not_of(" \t\n\r") == string::npos) {
+    if (!CheckEmpty && input.find_first_not_of(" \t\n\r") == string::npos) {
         throw ValidationException("Input cannot be empty.");
     }
 
@@ -311,7 +311,7 @@ void MenuSystem::displayLogisticsMenu() {
     cout << "8. Issue Ammunition to Personnel" << endl;
     cout << "9. Check Expired Supplies" << endl;
     cout << "10. Refillup Supplies" << endl;
-    cout << "11. Consume Supplies" << endl;
+    cout << "11. Used Supplies" << endl;
     cout << "12. Search Equipment by ID" << endl;
     cout << "0. Back to Main Menu" << endl;
     cout << "\nEnter your choice: ";
@@ -480,6 +480,9 @@ void MenuSystem::addContractor() {
         string company = readValidatedLine("Enter company name: ");
         string clearance = readValidatedLine("Enter security clearance (Confidential, Secret, Top Secret, TS/SCI): ");
         string endDate = readValidatedLine("Enter contract end date (YYYY-MM-DD): ");
+        if (!Utils::isValidDate(endDate)) {
+            throw ValidationException("Invalid contract end date format. Use YYYY-MM-DD.");
+        }
         double value = readValidatedDouble("Enter contract value: ");
 
         Contractor* contractor = new Contractor(name, sNumber, salary, company, clearance, endDate, value);
@@ -598,6 +601,9 @@ void MenuSystem::addSupplies() {
         double cost = readValidatedDouble("Enter unit cost: ");
         string loc = readValidatedLine("Enter storage location: ");
         string expDate = readValidatedLine("Enter expiration date (YYYY-MM-DD): ");
+        if (!Utils::isValidDate(expDate)) {
+            throw ValidationException("Invalid expiration date format. Use YYYY-MM-DD.");
+        }
         int minStock = readValidatedInt("Enter minimum stock level: ");
         string supplier = readValidatedLine("Enter supplier name: ");
 
