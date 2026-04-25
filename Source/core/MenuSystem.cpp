@@ -460,6 +460,9 @@ void MenuSystem::addOfficer() {
         string spec = readValidatedLine("Enter specialization: ");
         string cmdCenter = readValidatedLine("Enter command center: ");
         int years = readValidatedInt("Enter years of service: ");
+        if (years < 0) {
+            throw ValidationException("Years of service cannot be negative.");
+        }
 
         Officer* officer = new Officer(name, sNumber, rank, salary, spec, cmdCenter, years);
         officers.push_back(officer);
@@ -476,9 +479,15 @@ void MenuSystem::addContractor() {
     try {
         string name = readValidatedLine("Enter name: ");
         string sNumber = readValidatedLine("Enter service number (SN-XXXXX): ");
+        if (!Utils::isValidServiceNumber(sNumber)) {
+            throw ValidationException("Invalid service number format. Use SN-XXXXX.");
+        }
         double salary = readValidatedDouble("Enter salary: ");
         string company = readValidatedLine("Enter company name: ");
-        string clearance = readValidatedLine("Enter security clearance (Confidential, Secret, Top Secret, TS/SCI): ");
+        string clearance = readValidatedLine("Enter security clearance (Confidential, Secret, Top Secret): ");
+        if (!Utils::isValidSecurityClearance(clearance)) {
+            throw ValidationException("Invalid security clearance. Use Confidential, Secret, or Top Secret.");
+        }
         string endDate = readValidatedLine("Enter contract end date (YYYY-MM-DD): ");
         if (!Utils::isValidDate(endDate)) {
             throw ValidationException("Invalid contract end date format. Use YYYY-MM-DD.");
@@ -525,6 +534,7 @@ void MenuSystem::deletePersonnel() {
     for (auto it = officers.begin(); it != officers.end(); ++it) {
         if ((*it)->getID() == id) {
             cout << "Deleting Officer: " << (*it)->getName() << endl;
+            auditLog->addEntry("DELETE", "Officer", id, "Officer deleted");
             delete *it;
             officers.erase(it);
             cout << "Officer deleted." << endl;
@@ -535,6 +545,7 @@ void MenuSystem::deletePersonnel() {
     for (auto it = contractors.begin(); it != contractors.end(); ++it) {
         if ((*it)->getID() == id) {
             cout << "Deleting Contractor: " << (*it)->getName() << endl;
+            auditLog->addEntry("DELETE", "Contractor", id, "Contractor deleted");
             delete *it;
             contractors.erase(it);
             cout << "Contractor deleted." << endl;
@@ -581,6 +592,19 @@ void MenuSystem::addWeapon() {
         int magCap = readValidatedInt("Enter magazine capacity: ");
         string caliber = readValidatedLine("Enter caliber: ");
 
+        if (qty < 0) {
+            throw ValidationException("Quantity cannot be negative.");
+        }
+        if (cost < 0) {
+            throw ValidationException("Unit cost cannot be negative.");
+        }
+        if (ammo < 0) {
+            throw ValidationException("Ammunition cannot be negative.");
+        }
+        if (magCap <= 0) {
+            throw ValidationException("Magazine capacity must be greater than zero.");
+        }
+
         Weapon* weapon = new Weapon(name, code, type, qty, cost, loc, ammo, magCap, caliber);
         weapons.push_back(weapon);
         auditLog->addEntry("ADD", "Weapon", weapon->getID(), "Weapon " + name + " added");
@@ -606,6 +630,16 @@ void MenuSystem::addSupplies() {
         }
         int minStock = readValidatedInt("Enter minimum stock level: ");
         string supplier = readValidatedLine("Enter supplier name: ");
+
+        if (qty < 0) {
+            throw ValidationException("Quantity cannot be negative.");
+        }
+        if (cost < 0) {
+            throw ValidationException("Unit cost cannot be negative.");
+        }
+        if (minStock < 0) {
+            throw ValidationException("Minimum stock level cannot be negative.");
+        }
 
         Supplies* sup = new Supplies(name, code, type, qty, cost, loc, expDate, minStock, supplier);
         supplies.push_back(sup);
@@ -684,25 +718,11 @@ void MenuSystem::displayAllOperations() {
 // Operations actions
 void MenuSystem::createOperation() {
     cout << "\n=== CREATE NEW OPERATION ===" << endl;
-    cout << "Enter operation code: ";
-    string code;
-    getline(cin, code);
-    
-    cout << "Enter operation type (Training, Patrol, Combat, etc.): ";
-    string opType;
-    getline(cin, opType);
-    
-    cout << "Enter commander name: ";
-    string commander;
-    getline(cin, commander);
-    
-    cout << "Enter location: ";
-    string location;
-    getline(cin, location);
-    
-    cout << "Enter description: ";
-    string desc;
-    getline(cin, desc);
+    string code = readValidatedLine("Enter operation code: ");
+    string opType = readValidatedLine("Enter operation type (Training, Patrol, Combat, etc.): ");
+    string commander = readValidatedLine("Enter commander name: ");
+    string location = readValidatedLine("Enter location: ");
+    string desc = readValidatedLine("Enter description: ");
     
     try {
         Operation* op = new Operation(code, opType, commander, location, desc);
@@ -1030,7 +1050,12 @@ void MenuSystem::unassignWeaponFromPersonnel() {
     // Show assigned
     cout << "\n--- Weapons Assigned to " << person->getName() << " ---" << endl;
     for (const auto& weaponIDStr : assignedWeapons) {
-        int wID = stoi(weaponIDStr);
+        int wID = -1;
+        try {
+            wID = stoi(weaponIDStr);
+        } catch (const exception&) {
+            continue;
+        }
         Weapon* w = findWeaponByID(wID);
         if (w) {
             cout << "ID: " << w->getID() << " | Name: " << w->getName() 
@@ -1095,7 +1120,12 @@ void MenuSystem::viewPersonnelWeapons() {
         cout << "\nNo weapons assigned to " << person->getName() << endl;
     } else {
         for (const auto& weaponIDStr : assignedWeapons) {
-            int wID = stoi(weaponIDStr);
+            int wID = -1;
+            try {
+                wID = stoi(weaponIDStr);
+            } catch (const exception&) {
+                continue;
+            }
             Weapon* w = findWeaponByID(wID);
             if (w) {
                 cout << "\nWeapon ID: " << w->getID() << endl;
@@ -1271,6 +1301,10 @@ void MenuSystem::updateWeaponAmmunition() {
     cout << "2. Remove Ammunition" << endl;
     int choice = readValidatedInt("Enter choice: ");
     int amount = readValidatedInt("Enter amount: ");
+    if (amount <= 0) {
+        cout << "\nAmount must be greater than zero." << endl;
+        return;
+    }
     
     try {
         if (choice == 1) {
@@ -1342,6 +1376,10 @@ void MenuSystem::issueAmmunition() {
     }
     
     int quantity = readValidatedInt("\nEnter quantity to issue: ");
+    if (quantity <= 0) {
+        cout << "\nQuantity must be greater than zero." << endl;
+        return;
+    }
     
     if (quantity > weapon->getCurrentAmmunition()) {
         cout << "\nInsufficient ammunition. Available: " << weapon->getCurrentAmmunition() << endl;
@@ -1366,9 +1404,10 @@ void MenuSystem::checkExpiredSupplies() {
     }
     
     vector<Supplies*> expiredItems;
+    string currentDate = Utils::getCurrentDate();
     
     for (auto& supply : supplies) {
-        if (supply->getExpirationDate() < "2026-04-24") {
+        if (supply->getExpirationDate() < currentDate) {
             expiredItems.push_back(supply);
         }
     }
@@ -1421,6 +1460,10 @@ void MenuSystem::replenishSupplies() {
     }
     
     int quantity = readValidatedInt("Enter quantity to add: ");
+    if (quantity <= 0) {
+        cout << "\nQuantity must be greater than zero." << endl;
+        return;
+    }
     
     try {
         supply->replenishSupply(quantity);
@@ -1461,6 +1504,10 @@ void MenuSystem::consumeSupplies() {
     }
     
     int quantity = readValidatedInt("Enter quantity to consume: ");
+    if (quantity <= 0) {
+        cout << "\nQuantity must be greater than zero." << endl;
+        return;
+    }
     
     if (quantity > supply->getQuantity()) {
         cout << "\nInsufficient quantity. Available: " << supply->getQuantity() << endl;
@@ -1599,6 +1646,27 @@ void MenuSystem::assignEquipmentToOperation() {
     }
     
     int equipID = readValidatedInt("\nEnter equipment ID: ");
+
+    bool equipmentExists = false;
+    for (const auto& weapon : weapons) {
+        if (weapon->getID() == equipID) {
+            equipmentExists = true;
+            break;
+        }
+    }
+    if (!equipmentExists) {
+        for (const auto& supply : supplies) {
+            if (supply->getID() == equipID) {
+                equipmentExists = true;
+                break;
+            }
+        }
+    }
+
+    if (!equipmentExists) {
+        cout << "\nEquipment not found." << endl;
+        return;
+    }
     
     operation->requireEquipment(equipID);
     auditLog->addEntry("ASSIGN", "Operation", opID, "Equipment ID " + to_string(equipID) + " assigned");
@@ -1635,7 +1703,7 @@ void MenuSystem::updateOperationStatus() {
     }
     
     cout << "\nCurrent Status: " << operation->getStatus() << endl;
-    string newStatus = readValidatedLine("Enter new status (Planned, Active, Completed, Cancelled): ");
+    string newStatus = readValidatedLine("Enter new status (Planned, Active, Completed, On Hold): ");
     
     operation->setStatus(newStatus);
     auditLog->addEntry("UPDATE", "Operation", opID, "Status updated to " + newStatus);
@@ -1703,21 +1771,21 @@ void MenuSystem::generateOperationReport() {
     cout << "\n=== OPERATION REPORT ===" << endl;
     cout << "Total Operations: " << operations.size() << endl;
     
-    int planned = 0, active = 0, completed = 0, cancelled = 0;
+    int planned = 0, active = 0, completed = 0, onHold = 0;
     
     for (const auto& op : operations) {
         string status = op->getStatus();
         if (status == "Planned") planned++;
         else if (status == "Active") active++;
         else if (status == "Completed") completed++;
-        else if (status == "Cancelled") cancelled++;
+        else if (status == "On Hold") onHold++;
     }
     
     cout << "\nStatus Breakdown:" << endl;
     cout << "  Planned: " << planned << endl;
     cout << "  Active: " << active << endl;
     cout << "  Completed: " << completed << endl;
-    cout << "  Cancelled: " << cancelled << endl;
+    cout << "  On Hold: " << onHold << endl;
     
     cout << "\n--- ALL OPERATIONS ---" << endl;
     for (const auto& op : operations) {
