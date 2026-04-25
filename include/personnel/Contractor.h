@@ -42,7 +42,7 @@ class Contractor : public Person {
     void setContractValue(double value);
 
     // contarct mangment
-    bool isContractExpiring(int daysThreshold = 30) const ;
+    bool isContractExpiring(int daysThreshold = 30) const ; //Asumption of 30 days
     void renewContract(const string& newEndDate);
 
     private:

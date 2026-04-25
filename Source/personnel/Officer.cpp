@@ -46,13 +46,11 @@ void Officer::display() const {
 
 // Save to file
 void Officer::saveToFile(const string& filename) const {
-    // Implementation for file saving
     cout << "Saving officer to " << filename << endl;
 }
 
 // Load from file
 void Officer::loadFromFile(const string& filename) {
-    // Implementation for file loading
     cout << "Loading officer from " << filename << endl;
 }
 
