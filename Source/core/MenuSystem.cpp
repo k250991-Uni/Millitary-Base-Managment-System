@@ -14,7 +14,7 @@
 
 using namespace std;
 
-// Global data storage
+// Shared lists
 vector<Officer*> officers;
 vector<Contractor*> contractors;
 vector<Weapon*> weapons;
@@ -22,16 +22,17 @@ vector<Supplies*> supplies;
 vector<Operation*> operations;
 AuditLog* auditLog = nullptr;
 
-// Constructor
+// Startup setup
 MenuSystem::MenuSystem() : isRunning(true) {
     if (auditLog == nullptr) {
         auditLog = new AuditLog("military_audit.log");
     }
+    loadAllData();
 }
 
-// Destructor
+// Final cleanup
 MenuSystem::~MenuSystem() {
-    // Cleanup all dynamic objects
+    // Free objects
     for (auto officer : officers) delete officer;
     for (auto contractor : contractors) delete contractor;
     for (auto weapon : weapons) delete weapon;
@@ -44,16 +45,93 @@ MenuSystem::~MenuSystem() {
     }
 }
 
-// Main menu loop
-void MenuSystem::run() {
-    while (isRunning) {
-        displayMainMenu();
-        int choice = getMainMenuChoice();
-        handleMainMenu(choice);
+int MenuSystem::readValidatedInt(const string& prompt) {
+    if (!prompt.empty()) {
+        cout << prompt;
+    }
+
+    string input;
+    getline(cin, input);
+
+    if (input.empty()) {
+        throw ValidationException("Input cannot be empty.");
+    }
+
+    try {
+        size_t idx = 0;
+        int value = stoi(input, &idx);
+        if (idx != input.length()) {
+            throw ValidationException("Please enter a valid integer value.");
+        }
+        return value;
+    }
+    catch (const ValidationException&) {
+        throw;
+    }
+    catch (const exception&) {
+        throw ValidationException("Please enter a valid integer value.");
     }
 }
 
-// Display main menu
+double MenuSystem::readValidatedDouble(const string& prompt) {
+    if (!prompt.empty()) {
+        cout << prompt;
+    }
+
+    string input;
+    getline(cin, input);
+
+    if (input.empty()) {
+        throw ValidationException("Input cannot be empty.");
+    }
+
+    try {
+        size_t idx = 0;
+        double value = stod(input, &idx);
+        if (idx != input.length()) {
+            throw ValidationException("Please enter a valid numeric value.");
+        }
+        return value;
+    }
+    catch (const ValidationException&) {
+        throw;
+    }
+    catch (const exception&) {
+        throw ValidationException("Please enter a valid numeric value.");
+    }
+}
+
+string MenuSystem::readValidatedLine(const string& prompt, bool allowEmpty) {
+    if (!prompt.empty()) {
+        cout << prompt;
+    }
+
+    string input;
+    getline(cin, input);
+
+    if (!allowEmpty && input.find_first_not_of(" \t\n\r") == string::npos) {
+        throw ValidationException("Input cannot be empty.");
+    }
+
+    return input;
+}
+
+// Main loop
+void MenuSystem::run() {
+    while (isRunning) {
+        try {
+            displayMainMenu();
+            int choice = getMainMenuChoice();
+            handleMainMenu(choice);
+        }
+        catch (const ValidationException& e) {
+            cout << "\nInput Error: " << e.what() << endl;
+            Utils::pauseExecution("Press Enter to continue...");
+        }
+    }
+}
+
+// Main screen
 void MenuSystem::displayMainMenu() {
     Utils::clearScreen();
     Utils::printHeader("MILITARY BASE MANAGEMENT SYSTEM");
@@ -66,55 +144,82 @@ void MenuSystem::displayMainMenu() {
     cout << "\nEnter your choice: ";
 }
 
-// Get main menu choice
+// Read choice
 int MenuSystem::getMainMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
-// Handle main menu
+// Route choice
 void MenuSystem::handleMainMenu(int choice) {
     switch (choice) {
         case 1:
             while (true) {
-                displayPersonnelMenu();
-                int pChoice = getPersonnelMenuChoice();
-                if (pChoice == 0) break;
-                handlePersonnelMenu(pChoice);
+                try {
+                    displayPersonnelMenu();
+                    int pChoice = getPersonnelMenuChoice();
+                    if (pChoice == 0) break;
+                    handlePersonnelMenu(pChoice);
+                }
+                catch (const ValidationException& e) {
+                    cout << "\nInput Error: " << e.what() << endl;
+                    Utils::pauseExecution("Press Enter to continue...");
+                }
             }
             break;
         case 2:
             while (true) {
-                displayLogisticsMenu();
-                int lChoice = getLogisticsMenuChoice();
-                if (lChoice == 0) break;
-                handleLogisticsMenu(lChoice);
+                try {
+                    displayLogisticsMenu();
+                    int lChoice = getLogisticsMenuChoice();
+                    if (lChoice == 0) break;
+                    handleLogisticsMenu(lChoice);
+                }
+                catch (const ValidationException& e) {
+                    cout << "\nInput Error: " << e.what() << endl;
+                    Utils::pauseExecution("Press Enter to continue...");
+                }
             }
             break;
         case 3:
             while (true) {
-                displayOperationsMenu();
-                int oChoice = getOperationsMenuChoice();
-                if (oChoice == 0) break;
-                handleOperationsMenu(oChoice);
+                try {
+                    displayOperationsMenu();
+                    int oChoice = getOperationsMenuChoice();
+                    if (oChoice == 0) break;
+                    handleOperationsMenu(oChoice);
+                }
+                catch (const ValidationException& e) {
+                    cout << "\nInput Error: " << e.what() << endl;
+                    Utils::pauseExecution("Press Enter to continue...");
+                }
             }
             break;
         case 4:
             while (true) {
-                displayReportsMenu();
-                int rChoice = getReportsMenuChoice();
-                if (rChoice == 0) break;
-                handleReportsMenu(rChoice);
+                try {
+                    displayReportsMenu();
+                    int rChoice = getReportsMenuChoice();
+                    if (rChoice == 0) break;
+                    handleReportsMenu(rChoice);
+                }
+                catch (const ValidationException& e) {
+                    cout << "\nInput Error: " << e.what() << endl;
+                    Utils::pauseExecution("Press Enter to continue...");
+                }
             }
             break;
         case 5:
             while (true) {
-                displayAuditMenu();
-                int aChoice = getAuditMenuChoice();
-                if (aChoice == 0) break;
-                handleAuditMenu(aChoice);
+                try {
+                    displayAuditMenu();
+                    int aChoice = getAuditMenuChoice();
+                    if (aChoice == 0) break;
+                    handleAuditMenu(aChoice);
+                }
+                catch (const ValidationException& e) {
+                    cout << "\nInput Error: " << e.what() << endl;
+                    Utils::pauseExecution("Press Enter to continue...");
+                }
             }
             break;
         case 6:
@@ -126,7 +231,7 @@ void MenuSystem::handleMainMenu(int choice) {
     }
 }
 
-// Personnel Menu
+// Personnel menu
 void MenuSystem::displayPersonnelMenu() {
     Utils::clearScreen();
     Utils::printHeader("PERSONNEL MANAGEMENT");
@@ -146,10 +251,7 @@ void MenuSystem::displayPersonnelMenu() {
 }
 
 int MenuSystem::getPersonnelMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
 void MenuSystem::handlePersonnelMenu(int choice) {
@@ -195,7 +297,7 @@ void MenuSystem::handlePersonnelMenu(int choice) {
     Utils::pauseExecution("Press Enter to continue...");
 }
 
-// Logistics Menu
+// Logistics menu
 void MenuSystem::displayLogisticsMenu() {
     Utils::clearScreen();
     Utils::printHeader("LOGISTICS MANAGEMENT");
@@ -216,10 +318,7 @@ void MenuSystem::displayLogisticsMenu() {
 }
 
 int MenuSystem::getLogisticsMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
 void MenuSystem::handleLogisticsMenu(int choice) {
@@ -268,7 +367,7 @@ void MenuSystem::handleLogisticsMenu(int choice) {
     Utils::pauseExecution("Press Enter to continue...");
 }
 
-// Operations Menu
+// Operations menu
 void MenuSystem::displayOperationsMenu() {
     Utils::clearScreen();
     Utils::printHeader("OPERATIONS MANAGEMENT");
@@ -285,10 +384,7 @@ void MenuSystem::displayOperationsMenu() {
 }
 
 int MenuSystem::getOperationsMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
 void MenuSystem::handleOperationsMenu(int choice) {
@@ -325,7 +421,7 @@ void MenuSystem::handleOperationsMenu(int choice) {
     Utils::pauseExecution("Press Enter to continue...");
 }
 
-// Reports Menu
+// Reports menu
 void MenuSystem::displayReportsMenu() {
     Utils::clearScreen();
     Utils::printHeader("REPORTS & ANALYTICS");
@@ -336,10 +432,7 @@ void MenuSystem::displayReportsMenu() {
 }
 
 int MenuSystem::getReportsMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
 void MenuSystem::handleReportsMenu(int choice) {
@@ -356,40 +449,18 @@ void MenuSystem::handleReportsMenu(int choice) {
     Utils::pauseExecution("Press Enter to continue...");
 }
 
-// Personnel Management Implementations
+// Personnel actions
 void MenuSystem::addOfficer() {
     cout << "\n=== ADD NEW OFFICER ===" << endl;
-    cout << "Enter name: ";
-    string name;
-    getline(cin, name);
-    
-    cout << "Enter service number (SN-XXXXX): ";
-    string sNumber;
-    getline(cin, sNumber);
-    
-    cout << "Enter rank (Private, Sergeant, Lieutenant, Captain, Major, Colonel, General): ";
-    string rank;
-    getline(cin, rank);
-    
-    cout << "Enter salary: ";
-    string salStr;
-    getline(cin, salStr);
-    double salary = stod(salStr);
-    
-    cout << "Enter specialization: ";
-    string spec;
-    getline(cin, spec);
-    
-    cout << "Enter command center: ";
-    string cmdCenter;
-    getline(cin, cmdCenter);
-    
-    cout << "Enter years of service: ";
-    string yearsStr;
-    getline(cin, yearsStr);
-    int years = stoi(yearsStr);
-    
     try {
+        string name = readValidatedLine("Enter name: ");
+        string sNumber = readValidatedLine("Enter service number (SN-XXXXX): ");
+        string rank = readValidatedLine("Enter rank (Private, Sergeant, Lieutenant, Captain, Major, Colonel, General): ");
+        double salary = readValidatedDouble("Enter salary: ");
+        string spec = readValidatedLine("Enter specialization: ");
+        string cmdCenter = readValidatedLine("Enter command center: ");
+        int years = readValidatedInt("Enter years of service: ");
+
         Officer* officer = new Officer(name, sNumber, rank, salary, spec, cmdCenter, years);
         officers.push_back(officer);
         auditLog->addEntry("ADD", "Officer", officer->getID(), "Officer " + name + " added");
@@ -402,37 +473,15 @@ void MenuSystem::addOfficer() {
 
 void MenuSystem::addContractor() {
     cout << "\n=== ADD NEW CONTRACTOR ===" << endl;
-    cout << "Enter name: ";
-    string name;
-    getline(cin, name);
-    
-    cout << "Enter service number (SN-XXXXX): ";
-    string sNumber;
-    getline(cin, sNumber);
-    
-    cout << "Enter salary: ";
-    string salStr;
-    getline(cin, salStr);
-    double salary = stod(salStr);
-    
-    cout << "Enter company name: ";
-    string company;
-    getline(cin, company);
-    
-    cout << "Enter security clearance (Confidential, Secret, Top Secret, TS/SCI): ";
-    string clearance;
-    getline(cin, clearance);
-    
-    cout << "Enter contract end date (YYYY-MM-DD): ";
-    string endDate;
-    getline(cin, endDate);
-    
-    cout << "Enter contract value: ";
-    string valueStr;
-    getline(cin, valueStr);
-    double value = stod(valueStr);
-    
     try {
+        string name = readValidatedLine("Enter name: ");
+        string sNumber = readValidatedLine("Enter service number (SN-XXXXX): ");
+        double salary = readValidatedDouble("Enter salary: ");
+        string company = readValidatedLine("Enter company name: ");
+        string clearance = readValidatedLine("Enter security clearance (Confidential, Secret, Top Secret, TS/SCI): ");
+        string endDate = readValidatedLine("Enter contract end date (YYYY-MM-DD): ");
+        double value = readValidatedDouble("Enter contract value: ");
+
         Contractor* contractor = new Contractor(name, sNumber, salary, company, clearance, endDate, value);
         contractors.push_back(contractor);
         auditLog->addEntry("ADD", "Contractor", contractor->getID(), "Contractor " + name + " added");
@@ -468,19 +517,7 @@ void MenuSystem::displayAllPersonnel() {
 
 void MenuSystem::deletePersonnel() {
     cout << "\n=== DELETE PERSONNEL ===" << endl;
-    cout << "Enter personnel ID to delete: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter personnel ID to delete: ");
     
     for (auto it = officers.begin(); it != officers.end(); ++it) {
         if ((*it)->getID() == id) {
@@ -507,23 +544,8 @@ void MenuSystem::deletePersonnel() {
 
 void MenuSystem::promoteOfficer() {
     cout << "\n=== PROMOTE OFFICER ===" << endl;
-    cout << "Enter officer ID: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
-    
-    cout << "Enter new rank: ";
-    string newRank;
-    getline(cin, newRank);
+    int id = readValidatedInt("Enter officer ID: ");
+    string newRank = readValidatedLine("Enter new rank: ");
     
     for (auto& officer : officers) {
         if (officer->getID() == id) {
@@ -542,50 +564,20 @@ void MenuSystem::promoteOfficer() {
     cout << "\nOfficer not found." << endl;
 }
 
-// Logistics Management Implementations
+// Logistics actions
 void MenuSystem::addWeapon() {
     cout << "\n=== ADD NEW WEAPON ===" << endl;
-    cout << "Enter weapon name: ";
-    string name;
-    getline(cin, name);
-    
-    cout << "Enter equipment code: ";
-    string code;
-    getline(cin, code);
-    
-    cout << "Enter weapon type (Rifle, Pistol, Sniper, etc.): ";
-    string type;
-    getline(cin, type);
-    
-    cout << "Enter quantity: ";
-    string qtyStr;
-    getline(cin, qtyStr);
-    int qty = stoi(qtyStr);
-    
-    cout << "Enter unit cost: ";
-    string costStr;
-    getline(cin, costStr);
-    double cost = stod(costStr);
-    
-    cout << "Enter storage location: ";
-    string loc;
-    getline(cin, loc);
-    
-    cout << "Enter initial ammunition: ";
-    string ammoStr;
-    getline(cin, ammoStr);
-    int ammo = stoi(ammoStr);
-    
-    cout << "Enter magazine capacity: ";
-    string magStr;
-    getline(cin, magStr);
-    int magCap = stoi(magStr);
-    
-    cout << "Enter caliber: ";
-    string caliber;
-    getline(cin, caliber);
-    
     try {
+        string name = readValidatedLine("Enter weapon name: ");
+        string code = readValidatedLine("Enter equipment code: ");
+        string type = readValidatedLine("Enter weapon type (Rifle, Pistol, Sniper, etc.): ");
+        int qty = readValidatedInt("Enter quantity: ");
+        double cost = readValidatedDouble("Enter unit cost: ");
+        string loc = readValidatedLine("Enter storage location: ");
+        int ammo = readValidatedInt("Enter initial ammunition: ");
+        int magCap = readValidatedInt("Enter magazine capacity: ");
+        string caliber = readValidatedLine("Enter caliber: ");
+
         Weapon* weapon = new Weapon(name, code, type, qty, cost, loc, ammo, magCap, caliber);
         weapons.push_back(weapon);
         auditLog->addEntry("ADD", "Weapon", weapon->getID(), "Weapon " + name + " added");
@@ -598,46 +590,17 @@ void MenuSystem::addWeapon() {
 
 void MenuSystem::addSupplies() {
     cout << "\n=== ADD NEW SUPPLIES ===" << endl;
-    cout << "Enter supply name: ";
-    string name;
-    getline(cin, name);
-    
-    cout << "Enter equipment code: ";
-    string code;
-    getline(cin, code);
-    
-    cout << "Enter supply type (Food, Medical, Clothing, Fuel, etc.): ";
-    string type;
-    getline(cin, type);
-    
-    cout << "Enter quantity: ";
-    string qtyStr;
-    getline(cin, qtyStr);
-    int qty = stoi(qtyStr);
-    
-    cout << "Enter unit cost: ";
-    string costStr;
-    getline(cin, costStr);
-    double cost = stod(costStr);
-    
-    cout << "Enter storage location: ";
-    string loc;
-    getline(cin, loc);
-    
-    cout << "Enter expiration date (YYYY-MM-DD): ";
-    string expDate;
-    getline(cin, expDate);
-    
-    cout << "Enter minimum stock level: ";
-    string minStockStr;
-    getline(cin, minStockStr);
-    int minStock = stoi(minStockStr);
-    
-    cout << "Enter supplier name: ";
-    string supplier;
-    getline(cin, supplier);
-    
     try {
+        string name = readValidatedLine("Enter supply name: ");
+        string code = readValidatedLine("Enter equipment code: ");
+        string type = readValidatedLine("Enter supply type (Food, Medical, Clothing, Fuel, etc.): ");
+        int qty = readValidatedInt("Enter quantity: ");
+        double cost = readValidatedDouble("Enter unit cost: ");
+        string loc = readValidatedLine("Enter storage location: ");
+        string expDate = readValidatedLine("Enter expiration date (YYYY-MM-DD): ");
+        int minStock = readValidatedInt("Enter minimum stock level: ");
+        string supplier = readValidatedLine("Enter supplier name: ");
+
         Supplies* sup = new Supplies(name, code, type, qty, cost, loc, expDate, minStock, supplier);
         supplies.push_back(sup);
         auditLog->addEntry("ADD", "Supplies", sup->getID(), "Supplies " + name + " added");
@@ -672,19 +635,7 @@ void MenuSystem::displayAllEquipment() {
 
 void MenuSystem::deleteEquipment() {
     cout << "\n=== DELETE EQUIPMENT ===" << endl;
-    cout << "Enter equipment ID to delete: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter equipment ID to delete: ");
     
     for (auto it = weapons.begin(); it != weapons.end(); ++it) {
         if ((*it)->getID() == id) {
@@ -724,7 +675,7 @@ void MenuSystem::displayAllOperations() {
     }
 }
 
-// Operations Management Implementations
+// Operations actions
 void MenuSystem::createOperation() {
     cout << "\n=== CREATE NEW OPERATION ===" << endl;
     cout << "Enter operation code: ";
@@ -760,19 +711,7 @@ void MenuSystem::createOperation() {
 
 void MenuSystem::deleteOperation() {
     cout << "\n=== DELETE OPERATION ===" << endl;
-    cout << "Enter operation ID: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter operation ID: ");
     
     for (auto it = operations.begin(); it != operations.end(); ++it) {
         if ((*it)->getID() == id) {
@@ -794,7 +733,7 @@ void MenuSystem::generateEquipmentReport() {
     cout << "Total Supplies: " << supplies.size() << endl;
     cout << "Total Equipment: " << (weapons.size() + supplies.size()) << endl;
     
-    // Save to txt file
+    // Write report
     ofstream reportFile("equipment_report.txt");
     if (reportFile.is_open()) {
         reportFile << "======== EQUIPMENT REPORT ========\n";
@@ -828,7 +767,7 @@ void MenuSystem::generatePersonnelReport() {
     cout << "Total Contractors: " << contractors.size() << endl;
     cout << "Total Personnel: " << (officers.size() + contractors.size()) << endl;
     
-    // Calculate total salaries
+    // Sum salaries
     double totalSalary = 0;
     for (const auto& officer : officers) {
         totalSalary += officer->getSalary();
@@ -838,7 +777,7 @@ void MenuSystem::generatePersonnelReport() {
     }
     cout << "Total Salary Expense: Rs" << fixed << setprecision(2) << totalSalary << endl;
     
-    // Save to txt file
+    // Write report
     ofstream reportFile("personnel_report.txt");
     if (reportFile.is_open()) {
         reportFile << "======== PERSONNEL REPORT ========\n";
@@ -866,7 +805,7 @@ void MenuSystem::generatePersonnelReport() {
     }
 }
 
-// Audit Log Management
+// Audit actions
 void MenuSystem::displayAuditMenu() {
     Utils::clearScreen();
     Utils::printHeader("AUDIT LOG MANAGEMENT");
@@ -879,10 +818,7 @@ void MenuSystem::displayAuditMenu() {
 }
 
 int MenuSystem::getAuditMenuChoice() {
-    int choice;
-    cin >> choice;
-    cin.ignore();
-    return choice;
+    return readValidatedInt();
 }
 
 void MenuSystem::handleAuditMenu(int choice) {
@@ -916,9 +852,7 @@ void MenuSystem::viewAllAuditEntries() {
 }
 
 void MenuSystem::searchAuditByEntityType() {
-    string entityType;
-    cout << "\nEnter entity type to search (e.g., Officer, Contractor, Weapon, Supplies, Operation): ";
-    getline(cin, entityType);
+    string entityType = readValidatedLine("\nEnter entity type to search (e.g., Officer, Contractor, Weapon, Supplies, Operation): ");
     
     if (auditLog != nullptr) {
         cout << "\n";
@@ -930,9 +864,7 @@ void MenuSystem::searchAuditByEntityType() {
 }
 
 void MenuSystem::searchAuditByOperationType() {
-    string operationType;
-    cout << "\nEnter operation type to search (e.g., ADD, UPDATE, DELETE, PROMOTE): ";
-    getline(cin, operationType);
+    string operationType = readValidatedLine("\nEnter operation type to search (e.g., ADD, UPDATE, DELETE, PROMOTE): ");
     
     if (auditLog != nullptr) {
         cout << "\n";
@@ -944,19 +876,7 @@ void MenuSystem::searchAuditByOperationType() {
 }
 
 void MenuSystem::searchAuditByEntityID() {
-    int entityID;
-    cout << "\nEnter entity ID to search: ";
-    cin >> entityID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int entityID = readValidatedInt("\nEnter entity ID to search: ");
     
     if (auditLog != nullptr) {
         cout << "\n";
@@ -967,7 +887,7 @@ void MenuSystem::searchAuditByEntityID() {
     }
 }
 
-// Save and Load
+// Data sync
 void MenuSystem::saveAllData() {
     cout << "\nSaving all data..." << endl;
     if (auditLog != nullptr) {
@@ -984,7 +904,7 @@ void MenuSystem::loadAllData() {
     cout << "Data loaded successfully." << endl;
 }
 
-// Helper methods to find personnel and weapons by ID
+// Finder helpers
 Person* MenuSystem::findPersonnelByID(int id) {
     for (auto& officer : officers) {
         if (officer->getID() == id) {
@@ -1008,7 +928,7 @@ Weapon* MenuSystem::findWeaponByID(int id) {
     return nullptr;
 }
 
-// Weapon Assignment Functions
+// Weapon links
 void MenuSystem::assignWeaponToPersonnel() {
     cout << "\n=== ASSIGN WEAPON TO PERSONNEL ===" << endl;
     
@@ -1022,7 +942,7 @@ void MenuSystem::assignWeaponToPersonnel() {
         return;
     }
     
-    // Display all personnel
+    // Show personnel
     cout << "\n--- Available Personnel ---" << endl;
     for (const auto& officer : officers) {
         cout << "ID: " << officer->getID() << " | Name: " << officer->getName() 
@@ -1032,19 +952,7 @@ void MenuSystem::assignWeaponToPersonnel() {
         cout << "ID: " << contractor->getID() << " | Name: " << contractor->getName() << endl;
     }
     
-    cout << "\nEnter personnel ID: ";
-    int personID;
-    cin >> personID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int personID = readValidatedInt("\nEnter personnel ID: ");
     
     Person* person = findPersonnelByID(personID);
     if (!person) {
@@ -1052,26 +960,14 @@ void MenuSystem::assignWeaponToPersonnel() {
         return;
     }
     
-    // Display all weapons
+    // Show weapons
     cout << "\n--- Available Weapons ---" << endl;
     for (const auto& weapon : weapons) {
         cout << "ID: " << weapon->getID() << " | Name: " << weapon->getName() 
              << " | Type: " << weapon->getWeaponType() << " | Qty: " << weapon->getQuantity() << endl;
     }
     
-    cout << "\nEnter weapon ID to assign: ";
-    int weaponID;
-    cin >> weaponID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int weaponID = readValidatedInt("\nEnter weapon ID to assign: ");
     
     Weapon* weapon = findWeaponByID(weaponID);
     if (!weapon) {
@@ -1079,7 +975,7 @@ void MenuSystem::assignWeaponToPersonnel() {
         return;
     }
     
-    // Assign weapon
+    // Assign now
     if (person->hasWeapon(to_string(weaponID))) {
         cout << "\nThis weapon is already assigned to " << person->getName() << endl;
         return;
@@ -1101,7 +997,7 @@ void MenuSystem::unassignWeaponFromPersonnel() {
         return;
     }
     
-    // Display all personnel
+    // Show personnel
     cout << "\n--- Available Personnel ---" << endl;
     for (const auto& officer : officers) {
         cout << "ID: " << officer->getID() << " | Name: " << officer->getName() 
@@ -1111,19 +1007,7 @@ void MenuSystem::unassignWeaponFromPersonnel() {
         cout << "ID: " << contractor->getID() << " | Name: " << contractor->getName() << endl;
     }
     
-    cout << "\nEnter personnel ID: ";
-    int personID;
-    cin >> personID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int personID = readValidatedInt("\nEnter personnel ID: ");
     
     Person* person = findPersonnelByID(personID);
     if (!person) {
@@ -1137,7 +1021,7 @@ void MenuSystem::unassignWeaponFromPersonnel() {
         return;
     }
     
-    // Display assigned weapons
+    // Show assigned
     cout << "\n--- Weapons Assigned to " << person->getName() << " ---" << endl;
     for (const auto& weaponIDStr : assignedWeapons) {
         int wID = stoi(weaponIDStr);
@@ -1148,19 +1032,7 @@ void MenuSystem::unassignWeaponFromPersonnel() {
         }
     }
     
-    cout << "\nEnter weapon ID to unassign: ";
-    int weaponID;
-    cin >> weaponID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int weaponID = readValidatedInt("\nEnter weapon ID to unassign: ");
     
     Weapon* weapon = findWeaponByID(weaponID);
     if (!weapon) {
@@ -1189,7 +1061,7 @@ void MenuSystem::viewPersonnelWeapons() {
         return;
     }
     
-    // Display all personnel
+    // Show personnel
     cout << "\n--- Available Personnel ---" << endl;
     for (const auto& officer : officers) {
         cout << "ID: " << officer->getID() << " | Name: " << officer->getName() 
@@ -1199,19 +1071,7 @@ void MenuSystem::viewPersonnelWeapons() {
         cout << "ID: " << contractor->getID() << " | Name: " << contractor->getName() << endl;
     }
     
-    cout << "\nEnter personnel ID: ";
-    int personID;
-    cin >> personID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int personID = readValidatedInt("\nEnter personnel ID: ");
     
     Person* person = findPersonnelByID(personID);
     if (!person) {
@@ -1245,23 +1105,11 @@ void MenuSystem::viewPersonnelWeapons() {
     }
 }
 
-// NEW PERSONNEL FUNCTIONS
+// More personnel
 
 void MenuSystem::searchPersonnelByID() {
     cout << "\n=== SEARCH PERSONNEL BY ID ===" << endl;
-    cout << "Enter personnel ID: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter personnel ID: ");
     
     Person* person = findPersonnelByID(id);
     if (person) {
@@ -1275,9 +1123,7 @@ void MenuSystem::searchPersonnelByID() {
 
 void MenuSystem::searchPersonnelByName() {
     cout << "\n=== SEARCH PERSONNEL BY NAME ===" << endl;
-    cout << "Enter personnel name (full or partial): ";
-    string searchName;
-    getline(cin, searchName);
+    string searchName = readValidatedLine("Enter personnel name (full or partial): ");
     
     vector<Person*> results;
     
@@ -1308,19 +1154,7 @@ void MenuSystem::searchPersonnelByName() {
 
 void MenuSystem::updatePersonnelDetails() {
     cout << "\n=== UPDATE PERSONNEL DETAILS ===" << endl;
-    cout << "Enter personnel ID: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter personnel ID: ");
     
     Person* person = findPersonnelByID(id);
     if (!person) {
@@ -1333,52 +1167,24 @@ void MenuSystem::updatePersonnelDetails() {
     cout << "1. Salary" << endl;
     cout << "2. Rank" << endl;
     cout << "3. Current Position" << endl;
-    cout << "Enter choice: ";
-    int choice;
-    cin >> choice;
-    
-    // Handle invalid input for choice
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid choice." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int choice = readValidatedInt("Enter choice: ");
     
     try {
         if (choice == 1) {
             cout << "Current Salary: " << person->getSalary() << endl;
-            cout << "Enter new salary: ";
-            double newSalary;
-            cin >> newSalary;
-            
-            // Handle invalid input for salary
-            if (cin.fail()) {
-                cin.clear();
-                cin.ignore(10000, '\n');
-                cout << "\nInvalid input. Please enter a valid salary amount." << endl;
-                return;
-            }
-            
-            cin.ignore();
+            double newSalary = readValidatedDouble("Enter new salary: ");
             person->setSalary(newSalary);
             auditLog->addEntry("UPDATE", "Personnel", id, "Salary updated to " + to_string(newSalary));
             cout << "\nSalary updated successfully." << endl;
         } else if (choice == 2) {
             cout << "Current Rank: " << person->getRank() << endl;
-            cout << "Enter new rank: ";
-            string newRank;
-            getline(cin, newRank);
+            string newRank = readValidatedLine("Enter new rank: ");
             person->setRank(newRank);
             auditLog->addEntry("UPDATE", "Personnel", id, "Rank updated to " + newRank);
             cout << "\nRank updated successfully." << endl;
         } else if (choice == 3) {
             cout << "Current Position: " << person->getCurrentPosition() << endl;
-            cout << "Enter new position: ";
-            string newPos;
-            getline(cin, newPos);
+            string newPos = readValidatedLine("Enter new position: ");
             person->setCurrentPosition(newPos);
             auditLog->addEntry("UPDATE", "Personnel", id, "Position updated to " + newPos);
             cout << "\nPosition updated successfully." << endl;
@@ -1390,7 +1196,7 @@ void MenuSystem::updatePersonnelDetails() {
     }
 }
 
-// NEW LOGISTICS FUNCTIONS
+// More logistics
 
 void MenuSystem::checkInventory() {
     cout << "\n=== INVENTORY CHECK ===" << endl;
@@ -1446,19 +1252,7 @@ void MenuSystem::updateWeaponAmmunition() {
              << " | Current Ammo: " << weapon->getCurrentAmmunition() << endl;
     }
     
-    cout << "\nEnter weapon ID: ";
-    int weaponID;
-    cin >> weaponID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int weaponID = readValidatedInt("\nEnter weapon ID: ");
     
     Weapon* weapon = findWeaponByID(weaponID);
     if (!weapon) {
@@ -1469,33 +1263,8 @@ void MenuSystem::updateWeaponAmmunition() {
     cout << "\nCurrent Ammunition: " << weapon->getCurrentAmmunition() << endl;
     cout << "1. Add Ammunition" << endl;
     cout << "2. Remove Ammunition" << endl;
-    cout << "Enter choice: ";
-    int choice;
-    cin >> choice;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid choice." << endl;
-        return;
-    }
-    
-    cin.ignore();
-    
-    cout << "Enter amount: ";
-    int amount;
-    cin >> amount;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer amount." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int choice = readValidatedInt("Enter choice: ");
+    int amount = readValidatedInt("Enter amount: ");
     
     try {
         if (choice == 1) {
@@ -1527,19 +1296,7 @@ void MenuSystem::performWeaponMaintenance() {
         cout << "ID: " << weapon->getID() << " | Name: " << weapon->getName() << endl;
     }
     
-    cout << "\nEnter weapon ID: ";
-    int weaponID;
-    cin >> weaponID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int weaponID = readValidatedInt("\nEnter weapon ID: ");
     
     Weapon* weapon = findWeaponByID(weaponID);
     if (!weapon) {
@@ -1570,19 +1327,7 @@ void MenuSystem::issueAmmunition() {
              << " | Available: " << weapon->getCurrentAmmunition() << " rounds" << endl;
     }
     
-    cout << "\nEnter weapon ID: ";
-    int weaponID;
-    cin >> weaponID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int weaponID = readValidatedInt("\nEnter weapon ID: ");
     
     Weapon* weapon = findWeaponByID(weaponID);
     if (!weapon) {
@@ -1590,19 +1335,7 @@ void MenuSystem::issueAmmunition() {
         return;
     }
     
-    cout << "\nEnter quantity to issue: ";
-    int quantity;
-    cin >> quantity;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer quantity." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int quantity = readValidatedInt("\nEnter quantity to issue: ");
     
     if (quantity > weapon->getCurrentAmmunition()) {
         cout << "\nInsufficient ammunition. Available: " << weapon->getCurrentAmmunition() << endl;
@@ -1666,19 +1399,7 @@ void MenuSystem::replenishSupplies() {
              << " | Current Qty: " << supply->getQuantity() << endl;
     }
     
-    cout << "\nEnter supplies ID: ";
-    int supplyID;
-    cin >> supplyID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int supplyID = readValidatedInt("\nEnter supplies ID: ");
     
     Supplies* supply = nullptr;
     for (auto& s : supplies) {
@@ -1693,19 +1414,7 @@ void MenuSystem::replenishSupplies() {
         return;
     }
     
-    cout << "Enter quantity to add: ";
-    int quantity;
-    cin >> quantity;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer quantity." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int quantity = readValidatedInt("Enter quantity to add: ");
     
     try {
         supply->replenishSupply(quantity);
@@ -1730,19 +1439,7 @@ void MenuSystem::consumeSupplies() {
              << " | Current Qty: " << supply->getQuantity() << endl;
     }
     
-    cout << "\nEnter supplies ID: ";
-    int supplyID;
-    cin >> supplyID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int supplyID = readValidatedInt("\nEnter supplies ID: ");
     
     Supplies* supply = nullptr;
     for (auto& s : supplies) {
@@ -1757,19 +1454,7 @@ void MenuSystem::consumeSupplies() {
         return;
     }
     
-    cout << "Enter quantity to consume: ";
-    int quantity;
-    cin >> quantity;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer quantity." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int quantity = readValidatedInt("Enter quantity to consume: ");
     
     if (quantity > supply->getQuantity()) {
         cout << "\nInsufficient quantity. Available: " << supply->getQuantity() << endl;
@@ -1787,19 +1472,7 @@ void MenuSystem::consumeSupplies() {
 
 void MenuSystem::searchEquipmentByID() {
     cout << "\n=== SEARCH EQUIPMENT BY ID ===" << endl;
-    cout << "Enter equipment ID: ";
-    int id;
-    cin >> id;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int id = readValidatedInt("Enter equipment ID: ");
     
     for (auto& weapon : weapons) {
         if (weapon->getID() == id) {
@@ -1822,7 +1495,7 @@ void MenuSystem::searchEquipmentByID() {
     cout << "\nEquipment not found." << endl;
 }
 
-// NEW OPERATIONS FUNCTIONS
+
 
 void MenuSystem::assignPersonnelToOperation() {
     cout << "\n=== ASSIGN PERSONNEL TO OPERATION ===" << endl;
@@ -1842,19 +1515,7 @@ void MenuSystem::assignPersonnelToOperation() {
         cout << "ID: " << op->getID() << " | Code: " << op->getOperationCode() << endl;
     }
     
-    cout << "\nEnter operation ID: ";
-    int opID;
-    cin >> opID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int opID = readValidatedInt("\nEnter operation ID: ");
     
     Operation* operation = nullptr;
     for (auto& op : operations) {
@@ -1877,19 +1538,7 @@ void MenuSystem::assignPersonnelToOperation() {
         cout << "ID: " << contractor->getID() << " | Name: " << contractor->getName() << endl;
     }
     
-    cout << "\nEnter personnel ID: ";
-    int personID;
-    cin >> personID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int personID = readValidatedInt("\nEnter personnel ID: ");
     
     Person* person = findPersonnelByID(personID);
     if (!person) {
@@ -1920,19 +1569,7 @@ void MenuSystem::assignEquipmentToOperation() {
         cout << "ID: " << op->getID() << " | Code: " << op->getOperationCode() << endl;
     }
     
-    cout << "\nEnter operation ID: ";
-    int opID;
-    cin >> opID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int opID = readValidatedInt("\nEnter operation ID: ");
     
     Operation* operation = nullptr;
     for (auto& op : operations) {
@@ -1955,19 +1592,7 @@ void MenuSystem::assignEquipmentToOperation() {
         cout << "ID: " << supply->getID() << " | Name: " << supply->getName() << endl;
     }
     
-    cout << "\nEnter equipment ID: ";
-    int equipID;
-    cin >> equipID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int equipID = readValidatedInt("\nEnter equipment ID: ");
     
     operation->requireEquipment(equipID);
     auditLog->addEntry("ASSIGN", "Operation", opID, "Equipment ID " + to_string(equipID) + " assigned");
@@ -1988,19 +1613,7 @@ void MenuSystem::updateOperationStatus() {
              << " | Status: " << op->getStatus() << endl;
     }
     
-    cout << "\nEnter operation ID: ";
-    int opID;
-    cin >> opID;
-    
-    // Handle invalid input
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-        return;
-    }
-    
-    cin.ignore();
+    int opID = readValidatedInt("\nEnter operation ID: ");
     
     Operation* operation = nullptr;
     for (auto& op : operations) {
@@ -2016,9 +1629,7 @@ void MenuSystem::updateOperationStatus() {
     }
     
     cout << "\nCurrent Status: " << operation->getStatus() << endl;
-    cout << "Enter new status (Planned, Active, Completed, Cancelled): ";
-    string newStatus;
-    getline(cin, newStatus);
+    string newStatus = readValidatedLine("Enter new status (Planned, Active, Completed, Cancelled): ");
     
     operation->setStatus(newStatus);
     auditLog->addEntry("UPDATE", "Operation", opID, "Status updated to " + newStatus);
@@ -2032,54 +1643,33 @@ void MenuSystem::searchOperation() {
     cout << "2. Operation Code" << endl;
     cout << "3. Operation Type" << endl;
     cout << "4. Operation Status" << endl;
-    cout << "Enter choice: ";
-    int choice;
-    cin >> choice;
-    cin.ignore();
+    int choice = readValidatedInt("Enter choice: ");
     
     vector<Operation*> results;
     
     if (choice == 1) {
-        cout << "Enter operation ID: ";
-        int id;
-        cin >> id;
-        
-        // Handle invalid input
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(10000, '\n');
-            cout << "\nInvalid input. Please enter a valid integer ID." << endl;
-            return;
-        }
-        
-        cin.ignore();
+        int id = readValidatedInt("Enter operation ID: ");
         for (auto& op : operations) {
             if (op->getID() == id) {
                 results.push_back(op);
             }
         }
     } else if (choice == 2) {
-        cout << "Enter operation code: ";
-        string code;
-        getline(cin, code);
+        string code = readValidatedLine("Enter operation code: ");
         for (auto& op : operations) {
             if (op->getOperationCode() == code) {
                 results.push_back(op);
             }
         }
     } else if (choice == 3) {
-        cout << "Enter operation type: ";
-        string type;
-        getline(cin, type);
+        string type = readValidatedLine("Enter operation type: ");
         for (auto& op : operations) {
             if (op->getOperationType() == type) {
                 results.push_back(op);
             }
         }
     } else if (choice == 4) {
-        cout << "Enter operation status: ";
-        string status;
-        getline(cin, status);
+        string status = readValidatedLine("Enter operation status: ");
         for (auto& op : operations) {
             if (op->getStatus() == status) {
                 results.push_back(op);

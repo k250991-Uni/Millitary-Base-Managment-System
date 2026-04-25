@@ -35,7 +35,6 @@ class Contractor : public Person {
     double getContractValue() const { return contractValue;}
     static int getContractorCount() { return contractorCount; }
     
-
     //setters
     void setCompanyName(const string& company);
     void setSecurityClearanceLevel(const string & clearance);
@@ -45,7 +44,7 @@ class Contractor : public Person {
     // contarct mangment
     bool isContractExpiring(int daysThreshold = 30) const ;
     void renewContract(const string& newEndDate);
-    
+
     private:
     bool isClearanceLevelValid(const string& level) const;
 

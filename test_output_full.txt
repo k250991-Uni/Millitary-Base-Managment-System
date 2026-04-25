@@ -1,0 +1,1245 @@
+============================================================
+ MILITARY BASE MANAGEMENT SYSTEM - INITIALIZATION
+============================================================
+
+System Initialization Status:
+Exception handling system loaded
+Utility functions initialized
+Personnel management module ready
+Logistics management module ready
+Operations management module ready
+Audit logging system initialized
+
+System initialized successfully!
+
+Version: 1.0
+Build Date: 2026-04-25 15:32:17
+
+Press Enter to continue to main menu...
+Loading all data...
+Data loaded successfully.
+============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== ADD NEW OFFICER ===
+Enter name: Enter service number (SN-XXXXX): Enter rank (Private, Sergeant, Lieutenant, Captain, Major, Colonel, General): Enter salary: Enter specialization: Enter command center: Enter years of service: [LOG] Entity 1 (Capt. Hamza Ali): Officer created with specialization: Infantry
+
+Officer added successfully. ID: 1
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== ADD NEW CONTRACTOR ===
+Enter name: Enter service number (SN-XXXXX): Enter salary: Enter company name: Enter security clearance (Confidential, Secret, Top Secret, TS/SCI): Enter contract end date (YYYY-MM-DD): Enter contract value: [LOG] Entity 2 (Engr. Saad Raza): Contractor created from company: Karachi Naval Dockyard
+
+Contractor added successfully. ID: 2
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== ALL PERSONNEL ===
+
+--- Officers ---
+
+=== OFFICER INFORMATION ===
+ID: 1
+Name: Capt. Hamza Ali
+Service Number: SN-10001
+Rank: Captain
+Salary: Rs145000.00
+Position: Unassigned
+Specialization: Infantry
+Command Center: Rawalpindi GHQ
+Years of Service: 12
+Assigned Weapons: 0
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:17
+============================
+
+
+--- Contractors ---
+
+=== CONTRACTOR PERSONNEL INFORMATION ===
+ID: 2
+Name: Engr. Saad Raza
+Service Number: SN-10002
+Salary: Rs120000.00
+Position: Unassigned
+Company: Karachi Naval Dockyard
+Security Clearance: Secret
+Clearance Valid: YES
+Contract End Date: 2027-12-31
+Contract Value: Rs950000.00
+Assigned Weapons: 0
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:17
+========================================
+
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== SEARCH PERSONNEL BY ID ===
+Enter personnel ID: 
+============================================================
+
+=== OFFICER INFORMATION ===
+ID: 1
+Name: Capt. Hamza Ali
+Service Number: SN-10001
+Rank: Captain
+Salary: Rs145000.00
+Position: Unassigned
+Specialization: Infantry
+Command Center: Rawalpindi GHQ
+Years of Service: 12
+Assigned Weapons: 0
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:17
+============================
+
+============================================================
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== SEARCH PERSONNEL BY NAME ===
+Enter personnel name (full or partial): 
+============================================================
+SEARCH RESULTS: Found 1 personnel
+============================================================
+
+=== OFFICER INFORMATION ===
+ID: 1
+Name: Capt. Hamza Ali
+Service Number: SN-10001
+Rank: Captain
+Salary: Rs145000.00
+Position: Unassigned
+Specialization: Infantry
+Command Center: Rawalpindi GHQ
+Years of Service: 12
+Assigned Weapons: 0
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:17
+============================
+
+
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== UPDATE PERSONNEL DETAILS ===
+Enter personnel ID: 
+Updating: Capt. Hamza Ali
+
+What would you like to update?
+1. Salary
+2. Rank
+3. Current Position
+Enter choice: Current Salary: 145000.00
+Enter new salary: [LOG] Entity 1 (Capt. Hamza Ali): Salary updated to: Rs160000.000000
+
+Salary updated successfully.
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== PROMOTE OFFICER ===
+Enter officer ID: Enter new rank: [LOG] Entity 1 (Capt. Hamza Ali): Rank updated to: Major
+[LOG] Entity 1 (Capt. Hamza Ali): Promoted to rank: Major
+
+Officer promoted successfully.
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== ADD NEW WEAPON ===
+Enter weapon name: Enter equipment code: Enter weapon type (Rifle, Pistol, Sniper, etc.): Enter quantity: Enter unit cost: Enter storage location: Enter initial ammunition: Enter magazine capacity: Enter caliber: [LOG] Entity 3 (G3 Rifle): Weapon created: Rifle | Caliber: 7.62mm
+
+Weapon added successfully. ID: 3
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== ADD NEW SUPPLIES ===
+Enter supply name: Enter equipment code: Enter supply type (Food, Medical, Clothing, Fuel, etc.): Enter quantity: Enter unit cost: Enter storage location: Enter expiration date (YYYY-MM-DD): Enter minimum stock level: Enter supplier name: [LOG] Entity 4 (Combat Ration Pack): Supply created: Food | Supplier: NLC Logistics
+
+Supplies added successfully. ID: 4
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== ALL EQUIPMENT ===
+
+--- Weapons ---
+
+=== WEAPON INFORMATION ===
+ID: 3
+Name: G3 Rifle
+Code: WP-PAK-01
+Type: Rifle
+Caliber: 7.62mm
+Quantity: 25
+Unit Cost: Rs230000.00
+Total Value: Rs5750000.00
+Condition: Serviceable
+Location: Depot Alpha
+Ammunition: 400/30 (1333%)
+Security Lock: LOCKED
+Last Service: 
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:17
+===========================
+
+
+--- Supplies ---
+
+=== SUPPLIES INFORMATION ===
+ID: 4
+Name: Combat Ration Pack
+Code: SUP-PAK-01
+Type: Food
+Quantity: 80
+Unit Cost: Rs1200.00
+Total Value: Rs96000.00
+Condition: Available
+Location: Store Bravo
+Expiration Date: 2027-11-30
+Status: VALID
+Min Stock Level: 25
+Stock Status: ADEQUATE
+Supplier: NLC Logistics
+Created: 2026-04-25 15:32:18
+Last Modified: 2026-04-25 15:32:18
+==============================
+
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== INVENTORY CHECK ===
+============================================================
+
+--- WEAPONS INVENTORY ---
+
+ID: 3 | Name: G3 Rifle | Qty: 25 | Cost: Rs5750000.00
+
+--- SUPPLIES INVENTORY ---
+
+ID: 4 | Name: Combat Ration Pack | Qty: 80 | Cost: Rs96000.00
+
+============================================================
+TOTAL WEAPONS VALUE: Rs5750000.00
+TOTAL SUPPLIES VALUE: Rs96000.00
+TOTAL INVENTORY VALUE: Rs5846000.00
+============================================================
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== UPDATE WEAPON AMMUNITION ===
+
+--- Available Weapons ---
+ID: 3 | Name: G3 Rifle | Current Ammo: 400
+
+Enter weapon ID: 
+Current Ammunition: 400
+1. Add Ammunition
+2. Remove Ammunition
+Enter choice: Enter amount: [LOG] Entity 3 (G3 Rifle): Added 120 ammunition. Total: 30
+
+Ammunition added successfully.
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== PERFORM WEAPON MAINTENANCE ===
+
+--- Available Weapons ---
+ID: 3 | Name: G3 Rifle
+
+Enter weapon ID: [LOG] Entity 3 (G3 Rifle): Service date updated
+[LOG] Entity 3 (G3 Rifle): Maintenance performed
+
+Maintenance completed successfully.
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== ISSUE AMMUNITION ===
+
+--- Available Weapons ---
+ID: 3 | Name: G3 Rifle | Available: 30 rounds
+
+Enter weapon ID: 
+Enter quantity to issue: 
+Insufficient ammunition. Available: 30
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== CHECK EXPIRED SUPPLIES ===
+
+============================================================
+No expired supplies found.
+
+============================================================
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== REPLENISH SUPPLIES ===
+
+--- Available Supplies ---
+ID: 4 | Name: Combat Ration Pack | Current Qty: 80
+
+Enter supplies ID: Enter quantity to add: [LOG] Entity 4 (Combat Ration Pack): Replenished 40 units. Total: 120
+
+Supplies replenished successfully.
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== CONSUME SUPPLIES ===
+
+--- Available Supplies ---
+ID: 4 | Name: Combat Ration Pack | Current Qty: 120
+
+Enter supplies ID: Enter quantity to consume: [LOG] Entity 4 (Combat Ration Pack): Consumed 20 units. Remaining: 100
+
+Supplies consumed successfully.
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: 
+=== SEARCH EQUIPMENT BY ID ===
+Enter equipment ID: 
+============================================================
+
+=== WEAPON INFORMATION ===
+ID: 3
+Name: G3 Rifle
+Code: WP-PAK-01
+Type: Rifle
+Caliber: 7.62mm
+Quantity: 25
+Unit Cost: Rs230000.00
+Total Value: Rs5750000.00
+Condition: Serviceable
+Location: Depot Alpha
+Ammunition: 30/30 (100%)
+Security Lock: LOCKED
+Last Service: 
+Created: 2026-04-25 15:32:17
+Last Modified: 2026-04-25 15:32:19
+===========================
+
+============================================================
+Press Enter to continue...============================================================
+ LOGISTICS MANAGEMENT
+============================================================
+
+1. Add Weapon
+2. Add Supplies
+3. Delete Equipment
+4. Display All Equipment
+5. Check Inventory
+6. Update Weapon Ammunition
+7. Perform Weapon Maintenance
+8. Issue Ammunition to Personnel
+9. Check Expired Supplies
+10. Refillup Supplies
+11. Consume Supplies
+12. Search Equipment by ID
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== ASSIGN WEAPON TO PERSONNEL ===
+
+--- Available Personnel ---
+ID: 1 | Name: Capt. Hamza Ali | Rank: Major
+ID: 2 | Name: Engr. Saad Raza
+
+Enter personnel ID: 
+--- Available Weapons ---
+ID: 3 | Name: G3 Rifle | Type: Rifle | Qty: 25
+
+Enter weapon ID to assign: [LOG] Entity 1 (Capt. Hamza Ali): Weapon 3 assigned
+
+Weapon assigned successfully!
+Weapon: G3 Rifle assigned to: Capt. Hamza Ali
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== VIEW PERSONNEL WEAPONS ===
+
+--- Available Personnel ---
+ID: 1 | Name: Capt. Hamza Ali | Rank: Major
+ID: 2 | Name: Engr. Saad Raza
+
+Enter personnel ID: 
+============================================================
+WEAPONS ASSIGNED TO: Capt. Hamza Ali
+============================================================
+
+Weapon ID: 3
+Name: G3 Rifle
+Type: Rifle
+Caliber: 7.62mm
+Ammunition: 30
+Magazine Capacity: 30
+Status: LOCKED
+------------------------------------------------------------
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: 
+=== UNASSIGN WEAPON FROM PERSONNEL ===
+
+--- Available Personnel ---
+ID: 1 | Name: Capt. Hamza Ali | Rank: Major
+ID: 2 | Name: Engr. Saad Raza
+
+Enter personnel ID: 
+--- Weapons Assigned to Capt. Hamza Ali ---
+ID: 3 | Name: G3 Rifle | Type: Rifle
+
+Enter weapon ID to unassign: [LOG] Entity 1 (Capt. Hamza Ali): Weapon 3 unassigned
+
+Weapon unassigned successfully!
+Weapon: G3 Rifle unassigned from: Capt. Hamza Ali
+Press Enter to continue...============================================================
+ PERSONNEL MANAGEMENT
+============================================================
+
+1. Add Officer
+2. Add Contractor
+3. Delete Personnel
+4. Display All Personnel
+5. Promote Officer
+6. Search Personnel by ID
+7. Search Personnel by Name
+8. Update Personnel Details
+9. Assign Weapon to Personnel
+10. Unassign Weapon from Personnel
+11. View Personnel Weapons
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== CREATE NEW OPERATION ===
+Enter operation code: Enter operation type (Training, Patrol, Combat, etc.): Enter commander name: Enter location: Enter description: [LOG] Entity 5 (OP-ZARB-01): Operation created: Border Patrol at Sialkot Sector
+
+Operation created successfully. ID: 5
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== ALL OPERATIONS ===
+
+=== OPERATION INFORMATION ===
+ID: 5
+Operation Code: OP-ZARB-01
+Type: Border Patrol
+Commander: Maj. Hamza Ali
+Location: Sialkot Sector
+Status: Planned
+Start Date: 2026-04-25
+End Date: N/A
+Description: Night patrol near border posts
+Assigned Personnel: 0
+Required Equipment: 0
+Casualty Count: 0
+Created: 2026-04-25 15:32:21
+Last Modified: 2026-04-25 15:32:21
+=============================
+
+
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== ASSIGN PERSONNEL TO OPERATION ===
+
+--- Available Operations ---
+ID: 5 | Code: OP-ZARB-01
+
+Enter operation ID: 
+--- Available Personnel ---
+ID: 1 | Name: Capt. Hamza Ali
+ID: 2 | Name: Engr. Saad Raza
+
+Enter personnel ID: [LOG] Entity 5 (OP-ZARB-01): Personnel 1 assigned
+
+Personnel assigned successfully to operation.
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== ASSIGN EQUIPMENT TO OPERATION ===
+
+--- Available Operations ---
+ID: 5 | Code: OP-ZARB-01
+
+Enter operation ID: 
+--- Available Equipment ---
+ID: 3 | Name: G3 Rifle
+ID: 4 | Name: Combat Ration Pack
+
+Enter equipment ID: [LOG] Entity 5 (OP-ZARB-01): Equipment 3 required
+
+Equipment assigned successfully to operation.
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== UPDATE OPERATION STATUS ===
+
+--- Available Operations ---
+ID: 5 | Code: OP-ZARB-01 | Status: Planned
+
+Enter operation ID: 
+Current Status: Planned
+Enter new status (Planned, Active, Completed, Cancelled): [LOG] Entity 5 (OP-ZARB-01): Status updated to: Active
+
+Operation status updated successfully.
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== SEARCH OPERATION ===
+
+Search by:
+1. Operation ID
+2. Operation Code
+3. Operation Type
+4. Operation Status
+Enter choice: Enter operation code: 
+============================================================
+SEARCH RESULTS: Found 1 operation(s)
+============================================================
+
+=== OPERATION INFORMATION ===
+ID: 5
+Operation Code: OP-ZARB-01
+Type: Border Patrol
+Commander: Maj. Hamza Ali
+Location: Sialkot Sector
+Status: Active
+Start Date: 2026-04-25
+End Date: N/A
+Description: Night patrol near border posts
+Assigned Personnel: 1
+  - Personnel ID: 1
+Required Equipment: 1
+  - Equipment ID: 3
+Casualty Count: 0
+Created: 2026-04-25 15:32:21
+Last Modified: 2026-04-25 15:32:22
+=============================
+
+
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== OPERATION REPORT ===
+Total Operations: 1
+
+Status Breakdown:
+  Planned: 0
+  Active: 1
+  Completed: 0
+  Cancelled: 0
+
+--- ALL OPERATIONS ---
+
+ID: 5
+Code: OP-ZARB-01
+Type: Border Patrol
+Status: Active
+Location: Sialkot Sector
+------------------------------------------------------------
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== DELETE OPERATION ===
+Enter operation ID: Deleting Operation: OP-ZARB-01
+Operation deleted successfully.
+Press Enter to continue...============================================================
+ OPERATIONS MANAGEMENT
+============================================================
+
+1. Create Operation
+2. Delete Operation
+3. Display All Operations
+4. Assign Personnel to Operation
+5. Assign Equipment to Operation
+6. Update Operation Status
+7. Search Operation
+8. Generate Operation Report
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ REPORTS & ANALYTICS
+============================================================
+
+1. Personnel Report
+2. Equipment Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== PERSONNEL REPORT ===
+Total Officers: 1
+Total Contractors: 1
+Total Personnel: 2
+Total Salary Expense: Rs280000.00
+
+Report saved to personnel_report.txt
+Press Enter to continue...============================================================
+ REPORTS & ANALYTICS
+============================================================
+
+1. Personnel Report
+2. Equipment Report
+0. Back to Main Menu
+
+Enter your choice: 
+=== EQUIPMENT REPORT ===
+Total Weapons: 1
+Total Supplies: 1
+Total Equipment: 2
+
+Report saved to equipment_report.txt
+Press Enter to continue...============================================================
+ REPORTS & ANALYTICS
+============================================================
+
+1. Personnel Report
+2. Equipment Report
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: ============================================================
+ AUDIT LOG MANAGEMENT
+============================================================
+
+1. View All Audit Entries
+2. Search by Entity Type
+3. Search by Operation Type
+4. Search by Entity ID
+0. Back to Main Menu
+
+Enter your choice: 
+============================================================
+ ALL AUDIT ENTRIES
+============================================================
+
+=== AUDIT LOG ===
+Total Entries: 17
+------------------------------------------------------------
+[1] 2026-04-25 15:32:17 | Operation: ADD | Entity: Officer (ID: 1) | Details: Officer Capt. Hamza Ali added
+[2] 2026-04-25 15:32:17 | Operation: ADD | Entity: Contractor (ID: 2) | Details: Contractor Engr. Saad Raza added
+[3] 2026-04-25 15:32:17 | Operation: UPDATE | Entity: Personnel (ID: 1) | Details: Salary updated to 160000.000000
+[4] 2026-04-25 15:32:17 | Operation: UPDATE | Entity: Officer (ID: 1) | Details: Officer promoted to Major
+[5] 2026-04-25 15:32:17 | Operation: ADD | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle added
+[6] 2026-04-25 15:32:18 | Operation: ADD | Entity: Supplies (ID: 4) | Details: Supplies Combat Ration Pack added
+[7] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Ammunition added: 120 rounds
+[8] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Maintenance performed on G3 Rifle
+[9] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Supplies (ID: 4) | Details: Supplies replenished: 40 units
+[10] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Supplies (ID: 4) | Details: Supplies consumed: 20 units
+[11] 2026-04-25 15:32:20 | Operation: ASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle assigned to Capt. Hamza Ali
+[12] 2026-04-25 15:32:21 | Operation: UNASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle unassigned from Capt. Hamza Ali
+[13] 2026-04-25 15:32:21 | Operation: ADD | Entity: Operation (ID: 5) | Details: Operation OP-ZARB-01 created
+[14] 2026-04-25 15:32:22 | Operation: ASSIGN | Entity: Operation (ID: 5) | Details: Personnel Capt. Hamza Ali assigned
+[15] 2026-04-25 15:32:22 | Operation: ASSIGN | Entity: Operation (ID: 5) | Details: Equipment ID 3 assigned
+[16] 2026-04-25 15:32:22 | Operation: UPDATE | Entity: Operation (ID: 5) | Details: Status updated to Active
+[17] 2026-04-25 15:32:22 | Operation: DELETE | Entity: Operation (ID: 5) | Details: Operation deleted
+Press Enter to continue...============================================================
+ AUDIT LOG MANAGEMENT
+============================================================
+
+1. View All Audit Entries
+2. Search by Entity Type
+3. Search by Operation Type
+4. Search by Entity ID
+0. Back to Main Menu
+
+Enter your choice: 
+Enter entity type to search (e.g., Officer, Contractor, Weapon, Supplies, Operation): 
+============================================================
+ AUDIT ENTRIES FOR ENTITY TYPE: Weapon
+============================================================
+
+=== AUDIT LOG - Search by Entity Type: Weapon ===
+[5] 2026-04-25 15:32:17 | Operation: ADD | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle added
+[7] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Ammunition added: 120 rounds
+[8] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Maintenance performed on G3 Rifle
+[11] 2026-04-25 15:32:20 | Operation: ASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle assigned to Capt. Hamza Ali
+[12] 2026-04-25 15:32:21 | Operation: UNASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle unassigned from Capt. Hamza Ali
+Press Enter to continue...============================================================
+ AUDIT LOG MANAGEMENT
+============================================================
+
+1. View All Audit Entries
+2. Search by Entity Type
+3. Search by Operation Type
+4. Search by Entity ID
+0. Back to Main Menu
+
+Enter your choice: 
+Enter operation type to search (e.g., ADD, UPDATE, DELETE, PROMOTE): 
+============================================================
+ AUDIT ENTRIES FOR OPERATION TYPE: ADD
+============================================================
+
+=== AUDIT LOG - Search by Operation Type: ADD ===
+[1] 2026-04-25 15:32:17 | Operation: ADD | Entity: Officer (ID: 1) | Details: Officer Capt. Hamza Ali added
+[2] 2026-04-25 15:32:17 | Operation: ADD | Entity: Contractor (ID: 2) | Details: Contractor Engr. Saad Raza added
+[5] 2026-04-25 15:32:17 | Operation: ADD | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle added
+[6] 2026-04-25 15:32:18 | Operation: ADD | Entity: Supplies (ID: 4) | Details: Supplies Combat Ration Pack added
+[13] 2026-04-25 15:32:21 | Operation: ADD | Entity: Operation (ID: 5) | Details: Operation OP-ZARB-01 created
+Press Enter to continue...============================================================
+ AUDIT LOG MANAGEMENT
+============================================================
+
+1. View All Audit Entries
+2. Search by Entity Type
+3. Search by Operation Type
+4. Search by Entity ID
+0. Back to Main Menu
+
+Enter your choice: 
+Enter entity ID to search: 
+============================================================
+ AUDIT ENTRIES FOR ENTITY ID: 3
+============================================================
+
+=== AUDIT LOG - Search by Entity ID: 3 ===
+[5] 2026-04-25 15:32:17 | Operation: ADD | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle added
+[7] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Ammunition added: 120 rounds
+[8] 2026-04-25 15:32:19 | Operation: UPDATE | Entity: Weapon (ID: 3) | Details: Maintenance performed on G3 Rifle
+[11] 2026-04-25 15:32:20 | Operation: ASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle assigned to Capt. Hamza Ali
+[12] 2026-04-25 15:32:21 | Operation: UNASSIGN | Entity: Weapon (ID: 3) | Details: Weapon G3 Rifle unassigned from Capt. Hamza Ali
+Press Enter to continue...============================================================
+ AUDIT LOG MANAGEMENT
+============================================================
+
+1. View All Audit Entries
+2. Search by Entity Type
+3. Search by Operation Type
+4. Search by Entity ID
+0. Back to Main Menu
+
+Enter your choice: ============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+1. Personnel Management
+2. Logistics Management
+3. Operations Management
+4. Reports & Analytics
+5. Audit Log
+6. Save & Exit
+
+Enter your choice: 
+Saving all data...
+Data saved successfully.
+
+System cleanup in progress...
+Closing database connections
+Clearing memory buffers
+Finalizing audit logs
+
+System cleanup complete
+============================================================
+ MILITARY BASE MANAGEMENT SYSTEM
+============================================================
+
+Thank you for using Military Base Management System!
+Program terminated successfully.
+

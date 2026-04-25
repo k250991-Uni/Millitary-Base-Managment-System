@@ -99,6 +99,9 @@ class MenuSystem{
     void handleReportsMenu(int choice);
 
     //helper methods
+    int readValidatedInt(const string& prompt = "");
+    double readValidatedDouble(const string& prompt = "");
+    string readValidatedLine(const string& prompt = "", bool allowEmpty = false);
     Person* findPersonnelByID(int id);
     Weapon* findWeaponByID(int id);
 };
