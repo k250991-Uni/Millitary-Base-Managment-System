@@ -161,51 +161,167 @@ The following test cases are based on the uploaded execution runs and validate t
 ### TC-01: Add Officer (Personnel Registration)
 - **Use Case Mapping:** 1. Personnel Registration and Management
 - **Menu Path:** Main Menu -> Personnel Management -> 1. Add Officer
-- **Snippet:**
-- ![alt text](image.png)
+- **Input Snippet:**
+```text
+Enter name: Capt. Hamza Ali
+Enter service number (SN-XXXXX): SN-00001
+Enter rank (Private, Sergeant, Lieutenant, Captain, Major, Colonel, General): Captain
+Enter salary: 145000
+Enter specialization: Infantry
+Enter command center: Rawalpindi GHQ
+Enter years of service: 12
+```
+- **Expected/Observed Output:**
+```text
+[LOG] Entity 1 (Capt. Hamza Ali): Officer created with specialization: Infantry
+Officer added successfully. ID: 1
+```
 
 ### TC-02: Add Contractor (Personnel Registration)
 - **Use Case Mapping:** 1. Personnel Registration and Management
 - **Menu Path:** Main Menu -> Personnel Management -> 2. Add Contractor
-- **Snippet:**
-![alt text](image-1.png)
+- **Input Snippet:**
+```text
+Enter name: Engr. Ali
+Enter service number (SN-XXXXX): SN-00002
+Enter salary: 120000
+Enter company name: Dockyard
+Enter security clearance (Confidential, Secret, Top Secret): Secret
+Enter contract end date (YYYY-MM-DD): 2027-01-01
+Enter contract value: 900000
+```
+- **Expected/Observed Output:**
+```text
+[LOG] Entity 2 (Engr. Ali): Contractor created from company: Dockyard
+Contractor added successfully. ID: 2
+```
+
 ### TC-03: Delete Personnel (Officer)
 - **Use Case Mapping:** 1. Personnel Registration and Management
 - **Menu Path:** Main Menu -> Personnel Management -> 3. Delete Personnel
-- **Snippet:**
-![alt text](image-3.png)
+- **Input Snippet:**
+```text
+Enter personnel ID to delete: 1
+```
+- **Expected/Observed Output:**
+```text
+Deleting Officer: Capt. Hamza Ali
+Officer deleted.
+```
 
 ### TC-04: Add Weapon (Inventory Lifecycle)
 - **Use Case Mapping:** 2. Weapon and Supplies Lifecycle Management
 - **Menu Path:** Main Menu -> Logistics Management -> 1. Add Weapon
-- **Snippet:**
-![alt text](image-4.png)
+- **Input Snippet:**
+```text
+Enter weapon name: GP-Rifle
+Enter equipment code: G3-4001
+Enter weapon type (Rifle, Pistol, Sniper, etc.): Rifle
+Enter quantity: 25
+Enter unit cost: 230000
+Enter storage location: Alpha depot
+Enter initial ammunition: 4500
+Enter magazine capacity: 30
+Enter caliber: 7.2mm
+```
+- **Expected/Observed Output:**
+```text
+[LOG] Entity 1 (GP-Rifle): Weapon created: Rifle | Caliber: 7.2mm
+Weapon added successfully. ID: 1
+```
+
 ### TC-05: Add Supplies (Inventory Lifecycle)
 - **Use Case Mapping:** 2. Weapon and Supplies Lifecycle Management
 - **Menu Path:** Main Menu -> Logistics Management -> 2. Add Supplies
-- **Snippet:**
-![alt text](image-5.png)
+- **Input Snippet:**
+```text
+Enter supply name: Combat Ration Pack
+Enter equipment code: SP-1001
+Enter supply type (Food, Medical, Clothing, Fuel, etc.): Food
+Enter quantity: 40
+Enter unit cost: 50000
+Enter storage location: Karachi station
+Enter expiration date (YYYY-MM-DD): 2027-01-01
+Enter minimum stock level: 10
+Enter supplier name: Ali
+```
+- **Expected/Observed Output:**
+```text
+[LOG] Entity 2 (Combat Ration Pack): Supply created: Food | Supplier: Ali
+Supplies added successfully. ID: 2
+```
+
 ### TC-06: Check Inventory and Totals
 - **Use Case Mapping:** 2. Weapon and Supplies Lifecycle Management
 - **Menu Path:** Main Menu -> Logistics Management -> 5. Check Inventory
-- **Snippet:**
-![alt text](image-6.png)
+- **Expected/Observed Output Snippet:**
+```text
+ID: 1 | Name: GP-Rifle | Qty: 25 | Cost: Rs5750000.00
+ID: 2 | Name: Combat Ration Pack | Qty: 40 | Cost: Rs2000000.00
+
+TOTAL WEAPONS VALUE: Rs5750000.00
+TOTAL SUPPLIES VALUE: Rs2000000.00
+TOTAL INVENTORY VALUE: Rs7750000.00
+```
+
 ### TC-07: Search Equipment by ID (Supplies)
 - **Use Case Mapping:** 2. Weapon and Supplies Lifecycle Management
 - **Menu Path:** Main Menu -> Logistics Management -> 12. Search Equipment by ID
-- **Snippet:**
-![alt text](image-7.png)
+- **Input Snippet:**
+```text
+Enter equipment ID: 2
+```
+- **Expected/Observed Output Snippet:**
+```text
+=== SUPPLIES INFORMATION ===
+ID: 2
+Name: Combat Ration Pack
+Code: SP-1001
+Type: Food
+Quantity: 40
+Unit Cost: Rs50000.00
+Total Value: Rs2000000.00
+Status: VALID
+Stock Status: ADEQUATE
+Supplier: Ali
+```
+
 ### TC-08: Create and Delete Operation
 - **Use Case Mapping:** 3. Operation Planning and Execution Tracking
 - **Menu Path:** Main Menu -> Operations Management -> 1. Create Operation, then 2. Delete Operation
-- **Snippet:**
-![alt text](image-8.png)
-![alt text](image-9.png)
+- **Create Input Snippet:**
+```text
+Enter operation code: OP-ZARB
+Enter operation type (Training, Patrol, Combat, etc.): Patrol
+Enter commander name: Capt. Hamza
+Enter location: Karachi
+Enter description: patroling near bases
+```
+- **Create Expected/Observed Output:**
+```text
+[LOG] Entity 3 (OP-ZARB): Operation created: Patrol at Karachi
+Operation created successfully. ID: 3
+```
+- **Delete Input/Output Snippet:**
+```text
+Enter operation ID: 3
+Deleting Operation: OP-ZARB
+Operation deleted successfully.
+```
+
 ### TC-09: Audit Log Verification
 - **Use Case Mapping:** 5. Security Auditing and Traceability
 - **Menu Path:** Main Menu -> Audit Log Management -> 1. View All Audit Entries
-- **Snippet:**
-![alt text](image-10.png)-
+- **Expected/Observed Output Snippet:**
+```text
+Total Entries: 4
+[1] ... Operation: ADD    | Entity: Weapon (ID: 1)
+[2] ... Operation: ADD    | Entity: Supplies (ID: 2)
+[3] ... Operation: ADD    | Entity: Operation (ID: 3)
+[4] ... Operation: DELETE | Entity: Operation (ID: 3)
+```
+
+---
 
 ##  Core OOP Concepts Applied
 * **Encapsulation:** All data members (e.g., `salary`, `quantity`) are protected/private, accessible only through controlled getter and setter methods.
