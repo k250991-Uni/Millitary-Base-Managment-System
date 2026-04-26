@@ -3,10 +3,10 @@
 
 ##  Group Members
 * **Muhammad Anas** (ID: 25K-0899)
-* **Abdullah Moin**(ID: 25K-0991)
+* **Abdullah Moin** (ID: 25K-0991)
 * **Syed Alyan Hussain** (ID: 25K-0648)
 
-##  Project Folder Structure (Deep)
+##  Project Folder Structure 
 ```text
 Project/
 ├── Readme.md
@@ -61,7 +61,7 @@ The system emphasizes data integrity through a robust **Audit Log** that records
 
 ---
 
-##  Structured Use Cases (Whole Project)
+##  Use Cases
 
 ### 1. Personnel Registration and Management
 - **Primary Actor:** Base Administrator
